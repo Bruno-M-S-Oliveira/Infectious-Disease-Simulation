@@ -5,17 +5,20 @@
 # |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
 # Extra functions to avoid cluttering up the code
 
-Plot_AgeDist <- function(AgeDistData) {
-  ggplot(data=AgeDistData, aes(x=Age,fill=Age)) + alllabels_theme +
+Plot_AgeDist <- function(SickDistData) {
+  ggplot(data=SickDistData, aes(x=Age, fill=State)) + alllabels_theme +
+    scale_fill_manual(values=SIRD_theme) +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
-    geom_bar(aes(weight=N0))
+    geom_bar(aes(weight=N))
 }
 
-Plot_SickDist <- function(SickDistData) {
-  ggplot(data=SickDistData, aes(x=Age,fill=Age)) + alllabels_theme +
-    scale_x_discrete('Idade (Anos)') +
-    scale_y_continuous('Número de Pessoas') +
-    geom_bar(aes(weight=N0), alpha=.4) +
-    geom_bar(aes(weight=I0), alpha=1)
+Plot_Model <- function(Result) {
+  ggplot(Result, aes(x=time)) + alllabels_theme +
+    scale_color_manual(values=SIRD_theme) +
+    #geom_point(aes(y=N, color='N')) +
+    geom_point(aes(y=S, color='S')) +
+    geom_point(aes(y=I, color='I')) +
+    geom_point(aes(y=R, color='R')) +
+    geom_point(aes(y=D, color='D'))
 }

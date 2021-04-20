@@ -5,13 +5,20 @@
 # |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
 # Extra functions to avoid cluttering up the code
 
-SIR_Model <- function(t, state, parameters) {
-  with(as.list(c(state, parameters)), {
+SIR_Model <- function(t, y, parms) {
+  with(as.list(c(y, parms)), {
+    S=y[1]
+    I=y[2]
+    R=y[3]
+    D=y[4]
+    
     N <- S+I+R
       
-    dS <- -(b * I * S)/N
-    dI <- (b * I * S)/N - g*I
-    dR <- g*I
-    list(c(dS, dI, dR))
+    dS <- -(beta * I * S)/N
+    dI <- (beta * I * S)/N - gamma*I - mu*I
+    dR <- gamma*I
+    dD <- mu*I
+    
+    list(c(dS, dI, dR, dD))
   })
 }
