@@ -5,6 +5,12 @@
 # |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
 # Extra functions to avoid cluttering up the code
 
+source('Fun_GetCM.R')
+
+Get_Country <- function(input) {
+  input$Country
+}
+
 Get_T0 <- function(input) {
   c(input$T0_1,input$T0_2,input$T0_3,input$T0_4,input$T0_5,
     input$T0_6,input$T0_7,input$T0_8,input$T0_9)
@@ -34,11 +40,14 @@ Get_InitialState<- function(input) {
   c(S=S0, I=Def_I0, R=Def_R0, D=Def_D0)
 }
 
-Get_mu <- function(input) {
-  c(input$mu_1,input$mu_2,input$mu_3,input$mu_4,input$mu_5,
-    input$mu_6,input$mu_7,input$mu_8,input$mu_9)
+Get_IFR <- function(input) {
+  c(input$IFR_1,input$IFR_2,input$IFR_3,input$IFR_4,input$IFR_5,
+    input$IFR_6,input$IFR_7,input$IFR_8,input$IFR_9)
 }
 
 Get_Pars<- function(input) {
-  list(beta=Def_b, gamma=Def_g, mu=Def_mu)
+  IFR <- Get_IFR(input)
+  
+  list(u=Def_u, CM=get_ContactMatrix(Get_Country(input)),
+       gamma=(1-IFR)/Def_InfectiousPeriod, mu=IFR/Def_InfectiousPeriod)
 }

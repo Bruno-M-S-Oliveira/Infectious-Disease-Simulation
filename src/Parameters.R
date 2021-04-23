@@ -5,12 +5,16 @@
 # |___|_| |_|_|\__|
 # Things that are useful to do in the beginning
 
-# Models
+# Simulation
 Def_Times <- seq(0, 365, by=1)
 
-Def_b <- rep(0.1, 9)
-Def_g <- rep(0.001, 9)
-Def_mu <- rep(0.001, 9)
+Def_Country <- "PRT"
+
+Def_u <-c(.4, .38, .79, .86, .8, .82, .88, .74, .74)
+Def_LatentPeriod <- 3 # Days
+Def_InfectiousPeriod <- 5 # Days
+Def_IFR <- c(.001, .003, .01, .04, .12, .40, 1.36, 4.55, 15.24)/100
+
 
 # Population distribution
 # Thanks to https://github.com/dssg-pt/covid19pt-data

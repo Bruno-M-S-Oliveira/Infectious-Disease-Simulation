@@ -1,3 +1,6 @@
 [submodule "covid19pt-data"]
 	path = covid19pt-data
 	url = https://github.com/dssg-pt/covid19pt-data
+[submodule "synthetic-contact-matrices"]
+	path = synthetic-contact-matrices
+	url = https://github.com/kieshaprem/synthetic-contact-matrices

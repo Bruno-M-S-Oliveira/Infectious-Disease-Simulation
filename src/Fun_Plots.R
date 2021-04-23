@@ -7,6 +7,7 @@
 
 Plot_AgeDist <- function(SickDistData) {
   ggplot(data=SickDistData, aes(x=Age, fill=State)) + alllabels_theme +
+    theme(legend.position='top') +
     scale_fill_manual(values=SIRD_theme) +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
@@ -14,11 +15,10 @@ Plot_AgeDist <- function(SickDistData) {
 }
 
 Plot_Model <- function(Result) {
-  ggplot(Result, aes(x=time)) + alllabels_theme +
+  ggplot(Result, aes(x=time, y=N, color=State)) + alllabels_theme +
+    theme(legend.position='top') +
+    scale_x_continuous('Dia') +
+    scale_y_continuous('Número de Pessoas') +
     scale_color_manual(values=SIRD_theme) +
-    #geom_point(aes(y=N, color='N')) +
-    geom_point(aes(y=S, color='S')) +
-    geom_point(aes(y=I, color='I')) +
-    geom_point(aes(y=R, color='R')) +
-    geom_point(aes(y=D, color='D'))
+    geom_point()
 }
