@@ -19,7 +19,7 @@ Initial_Condition <- data.frame(Age, Def_I0, Def_R0, Def_D0) %>%
   mutate(S = Def_T0 - I - R - D, .before = I)
 
 # AgeDist
-Plot_AgeDist(Initial_Condition %>% select(Age, S, I, R, D) %>% 
+plot_AgeDist(Initial_Condition %>% select(Age, S, I, R, D) %>% 
                pivot_longer(!Age, names_to='State', values_to='N'))
 
 # Simulation
@@ -30,6 +30,6 @@ Parameters <- list(u=Def_u, CM=get_ContactMatrix(Def_Country),
 State <- c(S=Initial_Condition$S, I=Initial_Condition$I,
            R=Initial_Condition$R, D=Initial_Condition$D)
 
-Result <- Run_Sim(State, Parameters)
+Result <- run_Sim(State, Parameters)
 
-Plot_Model(Result)
+plot_Model(Result)

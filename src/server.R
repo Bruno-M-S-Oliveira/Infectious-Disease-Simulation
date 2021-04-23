@@ -14,19 +14,19 @@ source('Fun_DE.R')
 
 function(input, output) {
   output$AgeDist <- renderPlot({
-    DistData <- data.frame(Age, Get_I0(input),Get_R0(input),Get_D0(input)) %>%
+    DistData <- data.frame(Age, get_I0(input),get_R0(input),get_D0(input)) %>%
       set_colnames(c('Age','I','R','D')) %>% 
-      mutate(S = Get_T0(input) - I - R - D, .before=I) %>%
+      mutate(S = get_T0(input) - I - R - D, .before=I) %>%
       pivot_longer(!Age, names_to='State', values_to='N')
     print(DistData)
-    Plot_AgeDist(DistData)
+    plot_AgeDist(DistData)
   })
   
   output$SIRD <- renderPlot({
-    State <- Get_InitialState(input)
-    Parms <- Get_Pars(input)
+    State <- get_InitialState(input)
+    Parmeters <- get_Pars(input)
     
-    Plot_Model(Run_Sim(State, Parms))
+    plot_Model(run_Sim(State, Parmeters))
   })
 }
 

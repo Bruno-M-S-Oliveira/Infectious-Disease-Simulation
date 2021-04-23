@@ -5,7 +5,7 @@
 # |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
 # Extra functions to avoid cluttering up the code
 
-Plot_AgeDist <- function(SickDistData) {
+plot_AgeDist <- function(SickDistData) {
   ggplot(data=SickDistData, aes(x=Age, fill=State)) + alllabels_theme +
     theme(legend.position='top') +
     scale_fill_manual(values=SIRD_theme) +
@@ -14,7 +14,7 @@ Plot_AgeDist <- function(SickDistData) {
     geom_bar(aes(weight=N))
 }
 
-Plot_Model <- function(Result) {
+plot_Model <- function(Result) {
   ggplot(Result, aes(x=time, y=N, color=State)) + alllabels_theme +
     theme(legend.position='top') +
     scale_x_continuous('Dia') +

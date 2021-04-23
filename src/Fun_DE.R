@@ -23,7 +23,7 @@ SIRD_Model <- function(t, y, parms) {
   })
 }
 
-Run_Sim <- function(State, Parameters) {
+run_Sim <- function(State, Parameters) {
   as.data.frame(ode(y=State, times=Def_Times, func=SIRD_Model, parms=Parameters)) %>% 
     mutate(S=S1+S2+S3+S4+S5+S6+S7+S8+S9) %>% 
     mutate(I=I1+I2+I3+I4+I5+I6+I7+I8+I9) %>% 
