@@ -51,6 +51,9 @@ Age <- c('[0-9]','[10-19]','[20-29]','[30-39]','[40-49]','[50-59]','[60-69]',
 Def_T0 <- c(841076,1015166,1073698,1215309,1575911,1481007,
             1293824,1018314,682402)
 
+# Number of currently exposed individuals
+Def_E0 <- rep(0, 9)
+
 # Number of deaths
 #Def_D0 <- c(Data$D_0,Data$D_10,Data$D_20,Data$D_30,Data$D_40,
 #            Data$D_50,Data$D_60,Data$D_70,Data$D_80)

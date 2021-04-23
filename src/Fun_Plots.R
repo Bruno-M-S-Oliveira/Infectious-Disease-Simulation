@@ -6,19 +6,17 @@
 # Extra functions to avoid cluttering up the code
 
 plot_AgeDist <- function(SickDistData) {
-  ggplot(data=SickDistData, aes(x=Age, fill=State)) + alllabels_theme +
+  ggplot(data=SickDistData, aes(x=Age, fill=State)) + alllabels_theme + SEIRD_theme +
     theme(legend.position='top') +
-    scale_fill_manual(values=SIRD_theme) +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
     geom_bar(aes(weight=N))
 }
 
 plot_Model <- function(Result) {
-  ggplot(Result, aes(x=time, y=N, color=State)) + alllabels_theme +
+  ggplot(Result, aes(x=time, y=N, color=State)) + alllabels_theme + SEIRD_theme +
     theme(legend.position='top') +
     scale_x_continuous('Dia') +
     scale_y_continuous('Número de Pessoas') +
-    scale_color_manual(values=SIRD_theme) +
     geom_point()
 }

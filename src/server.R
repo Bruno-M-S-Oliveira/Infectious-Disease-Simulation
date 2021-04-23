@@ -18,15 +18,15 @@ function(input, output) {
       set_colnames(c('Age','I','R','D')) %>% 
       mutate(S = get_T0(input) - I - R - D, .before=I) %>%
       pivot_longer(!Age, names_to='State', values_to='N')
-    print(DistData)
+    
     plot_AgeDist(DistData)
   })
   
   output$SIRD <- renderPlot({
     State <- get_InitialState(input)
-    Parmeters <- get_Pars(input)
-    
-    plot_Model(run_Sim(State, Parmeters))
+    Parameters <- get_Parameters(input)
+    print(Parameters)
+    plot_Model(run_Sim(State, Parameters))
   })
 }
 

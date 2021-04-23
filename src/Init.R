@@ -24,14 +24,28 @@ source('Parameters.R')
 # ggplot
 theme_set(theme_bw())
 
-SIRD_theme <- c("#FC717F", "#9890FF", "#00BC59", "#00BBD8")
+SEIRD_theme <- scale_color_manual(
+  name = "Estado",
+  aesthetics = c("colour", "fill"),
+  values = c("S"="#00BBD8", "E"="#ECBD13", "I"="#9890FF", "R"="#00BC59", "D"="#FC717F"),
+  limits=c("S", "E", "I", "R", "D")
+  )
 
-alllabels_theme <- theme(plot.title = element_text(size = 12, face = "plain"),
-                         legend.position = "none")
-onlyx_theme <- alllabels_theme + theme(axis.title.y = element_blank(),
-                                       axis.text.y = element_blank())
-onlyy_theme <- alllabels_theme + theme(axis.title.x = element_blank(),
-                                       axis.text.x = element_blank())
+alllabels_theme <- theme(
+  plot.title = element_text(size = 12, face = "plain"),
+  legend.position = "none"
+  )
+
+onlyx_theme <- alllabels_theme + theme(
+  axis.title.y = element_blank(),
+  axis.text.y = element_blank()
+  )
+
+onlyy_theme <- alllabels_theme + theme(
+  axis.title.x = element_blank(),
+  axis.text.x = element_blank()
+  )
+
 nolabels_theme <- onlyx_theme + onlyy_theme
 
 ggsave <- function(filename, plot = last_plot(), device = NULL, path = NULL,

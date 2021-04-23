@@ -21,11 +21,14 @@ fluidPage(
       
       h4("Parâmetros"),
       fluidRow(align='center',
-               column(6, selectInput("Country", "País:",
+               column(4, selectInput("Country", "País:",
                                      c("Portugal" = "PRT",
                                        "Estados Unidos" = "USA",
                                        "Espanha" = "ESP"))),
-               column(6, numericInput("I0_1", "Infetadas"  , min=0, value=Def_I0[1])),
+               column(4, numericInput("LatentPeriod", "Período Latente", 
+                                      min=0, value=Def_LatentPeriod, max=20)),
+               column(4, numericInput("InfectiousPeriod", "Período Infeccioso",
+                                      min=0, value=Def_InfectiousPeriod, max=20)),
       ),
       
       h4(Age[1]),

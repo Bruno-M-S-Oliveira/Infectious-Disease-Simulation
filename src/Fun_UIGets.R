@@ -11,9 +11,21 @@ get_Country <- function(input) {
   input$Country
 }
 
+get_LatentPeriod <- function(input) {
+  input$LatentPeriod
+}
+
+get_InfectiousPeriod <- function(input) {
+  input$InfectiousPeriod
+}
+
 get_T0 <- function(input) {
   c(input$T0_1,input$T0_2,input$T0_3,input$T0_4,input$T0_5,
     input$T0_6,input$T0_7,input$T0_8,input$T0_9)
+}
+
+get_E0 <- function(input) {
+  return(Def_E0)
 }
 
 get_I0 <- function(input) {
@@ -31,13 +43,13 @@ get_D0 <- function(input) {
 }
 
 get_InitialState<- function(input) {
-  T0 <- get_T0(input)
+  E0 <- get_E0(input)
   I0 <- get_I0(input)
   R0 <- get_R0(input)
   D0 <- get_D0(input)
-  S0 <- T0 - I0 - R0 - D0
+  S0 <- get_T0(input) - I0 - R0 - D0
   
-  c(S=S0, I=Def_I0, R=Def_R0, D=Def_D0)
+  c(S=S0, E=E0, I=I0, R=R0, D=D0)
 }
 
 get_u <- function(input) {
@@ -50,9 +62,11 @@ get_IFR <- function(input) {
     input$IFR_6,input$IFR_7,input$IFR_8,input$IFR_9)
 }
 
-get_Pars<- function(input) {
+get_Parameters<- function(input) {
   IFR <- get_IFR(input)
   
   list(u=get_u(input), CM=get_ContactMatrix(get_Country(input)),
-       gamma=(1-IFR)/Def_InfectiousPeriod, mu=IFR/Def_InfectiousPeriod)
+       alpha=1/get_LatentPeriod(input),
+       gamma=(1-Def_IFR)/get_InfectiousPeriod(input),
+       mu=Def_IFR/get_InfectiousPeriod(input))
 }
