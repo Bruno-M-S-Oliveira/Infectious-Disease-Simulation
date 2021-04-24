@@ -14,9 +14,21 @@ plot_AgeDist <- function(SickDistData) {
 }
 
 plot_Model <- function(Result) {
-  ggplot(Result, aes(x=time, y=N, color=State)) + alllabels_theme + SEIRD_theme +
-    theme(legend.position='top') +
+  Result %>% 
+    select(time, S, Sv, E, Ev, I, Iv, R, Rv, D) %>% 
+    pivot_longer(!time, names_to='State', values_to='N') %>% 
+    ggplot(aes(x=time, y=N, color=State)) + alllabels_theme + SEIRD_theme +
     scale_x_continuous('Dia') +
     scale_y_continuous('Número de Pessoas') +
-    geom_point()
+    geom_point(size=1)
+}
+
+plot_Model_Zoom <- function(Result) {
+  Result %>%
+    select(time, E, Ev, I, Iv, Rv, D) %>% 
+    pivot_longer(!time, names_to='State', values_to='N') %>% 
+    ggplot(aes(x=time, y=N, color=State)) + alllabels_theme + SEIRD_theme +
+    scale_x_continuous('Dia') +
+    scale_y_continuous('Número de Pessoas') +
+    geom_point(size=1)
 }

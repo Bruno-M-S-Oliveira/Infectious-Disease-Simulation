@@ -27,8 +27,10 @@ theme_set(theme_bw())
 SEIRD_theme <- scale_color_manual(
   name = "Estado",
   aesthetics = c("colour", "fill"),
-  values = c("S"="#00BBD8", "E"="#ECBD13", "I"="#9890FF", "R"="#00BC59", "D"="#FC717F"),
-  limits=c("S", "E", "I", "R", "D")
+  values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62", 
+             "I"="#695DFF", "Iv"="#9890FF", "R"="#3BC455", "Rv"="#62D077",
+             "D"="#FC717F"),
+  limits=c("S", "Sv", "E", "Ev", "I", "Iv", "R", "Rv", "D")
   )
 
 alllabels_theme <- theme(

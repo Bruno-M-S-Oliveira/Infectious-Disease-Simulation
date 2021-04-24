@@ -8,9 +8,9 @@ rm(list=ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source('Init.R')
+source('Fun_GetUI.R')
+source('Fun_Sim.R')
 source('Fun_Plots.R')
-source('Fun_UIGets.R')
-source('Fun_DE.R')
 
 fluidPage(
   titlePanel("Projeto de LID"),
@@ -25,9 +25,9 @@ fluidPage(
                                      c("Portugal" = "PRT",
                                        "Estados Unidos" = "USA",
                                        "Espanha" = "ESP"))),
-               column(4, numericInput("LatentPeriod", "Período Latente", 
+               column(4, numericInput("LPeriod", "Período Latente", 
                                       min=0, value=Def_LatentPeriod, max=20)),
-               column(4, numericInput("InfectiousPeriod", "Período Infeccioso",
+               column(4, numericInput("IPeriod", "Período Infeccioso",
                                       min=0, value=Def_InfectiousPeriod, max=20)),
       ),
       
@@ -133,7 +133,8 @@ fluidPage(
   mainPanel(
     width = 7,
     plotOutput(outputId = "AgeDist"),
-    plotOutput(outputId = "SIRD")
+    plotOutput(outputId = "Plot"),
+    plotOutput(outputId = "Plot_Zoom")
     )
   )
 )

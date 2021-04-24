@@ -8,9 +8,9 @@ rm(list=ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source('Init.R')
+source('Fun_GetUI.R')
+source('Fun_Sim.R')
 source('Fun_Plots.R')
-source('Fun_UIGets.R')
-source('Fun_DE.R')
 
 function(input, output) {
   output$AgeDist <- renderPlot({
@@ -22,11 +22,18 @@ function(input, output) {
     plot_AgeDist(DistData)
   })
   
-  output$SIRD <- renderPlot({
+  output$Plot<- renderPlot({
     State <- get_InitialState(input)
     Parameters <- get_Parameters(input)
-    print(Parameters)
-    plot_Model(run_Sim(State, Parameters))
+    Result <- run_Sim(State, Parameters, get_Times(input), get_VaxTimes(input))
+    plot_Model(Result)
+  })
+  
+  output$Plot_Zoom <- renderPlot({
+    State <- get_InitialState(input)
+    Parameters <- get_Parameters(input)
+    Result <- run_Sim(State, Parameters, get_Times(input), get_VaxTimes(input))
+    plot_Model_Zoom(Result)
   })
 }
 
