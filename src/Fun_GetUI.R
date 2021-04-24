@@ -64,7 +64,7 @@ get_InitialState<- function(input) {
 # ------Parameters------
 get_u <- function(input) {
   c(input$u_1,input$u_2,input$u_3,input$u_4,input$u_5,
-    input$u_6,input$u_7,input$u_8,input$u_9)
+    input$u_6,input$u_7,input$u_8,input$u_9)/100
 }
 
 get_Country <- function(input) {
@@ -72,7 +72,7 @@ get_Country <- function(input) {
 }
 
 get_BRN <- function(input) {
-  Def_BRN
+  input$BRN
 }
 
 get_LatentPeriod <- function(input) {
@@ -85,23 +85,23 @@ get_InfectiousPeriod <- function(input) {
 
 get_IFR <- function(input) {
   c(input$IFR_1,input$IFR_2,input$IFR_3,input$IFR_4,input$IFR_5,
-    input$IFR_6,input$IFR_7,input$IFR_8,input$IFR_9)
+    input$IFR_6,input$IFR_7,input$IFR_8,input$IFR_9)/100
 }
 
 get_VaxGoal <- function(input) {
-  Def_VaxGoal
+  input$VaxGoal/100
 }
 
 get_VaxEffect <- function(input) {
-  Def_VaxEffect
+  input$VaxEffect/100
 }
 
 get_VaxStart <- function(input) {
-  Def_VaxStart
+  input$VaxStart
 }
 
 get_VaxIncrease <- function(input) {
-  Def_VaxIncrease
+  input$VaxIncrease
 }
 
 get_Parameters<- function(input) {

@@ -60,12 +60,18 @@ vax_Event <- function(t, y, parms) {
   
   ToVax <- sum(S+E)
   VaxToday <- vs + vi*t
-
-  dSv <- VaxToday*S/ToVax
+  
+  if(ToVax > VaxToday) {
+    dSv <- VaxToday*S/ToVax
+    dEv <- VaxToday*E/ToVax
+  } else {
+    dSv <- S
+    dEv <- E
+  }
+  
   S  <- S  - dSv #VaxToday*vi*S/ToVax
   Sv <- Sv + dSv #VaxToday*vi*S/ToVax
   
-  dEv <- VaxToday*E/ToVax
   E  <- E  - dEv #VaxToday*vi*E/ToVax
   Ev <- Ev + dEv #VaxToday*vi*E/ToVax
   
