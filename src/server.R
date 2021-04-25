@@ -46,8 +46,9 @@ function(input, output) {
     State <- get_InitialState(input)
     Parameters <- get_Parameters(input)
     Result <- run_Sim(State, Parameters, get_Times(input), get_VaxTimes(input))
-    plot_grid(ncol=1, align = "v", plot_AgeDist(DistData), 
-              plot_Model(Result), plot_Model_Zoom(Result))
+    plot_grid(ncol=1, align = "v", plot_BeforeAgeDist(DistData), 
+              plot_Model(Result), plot_Model_Zoom(Result), 
+              plot_AfterAgeDist(Result))
   })
 }
 

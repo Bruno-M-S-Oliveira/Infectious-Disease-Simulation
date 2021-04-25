@@ -18,20 +18,12 @@ Initial_Condition <- data.frame(Age, Def_Sv0, Def_E0, Def_Ev0, Def_I0, Def_Iv0,
   set_colnames(c('Age','Sv','E','Ev','I','Iv','R','Rv','D')) %>% 
   mutate(S = Def_T0 - E - I - R - D, .after = Age)
 
-# AgeDist
-plot_AgeDist(Initial_Condition %>% select(Age, S, E, I, R, D) %>% 
-               pivot_longer(!Age, names_to='State', values_to='N'))
 
 # Simulation
 CM <- get_ContactMatrix(Def_Country)
 uScaling <- get_u_scaling(Def_u, CM, Def_InfectiousPeriod, Def_BRN)
 
 VaxGoalN <- Def_VaxGoal*sum(Def_T0)
-#VaxTimes <- seq(
-#  from=0, by=1,
-#  to=floor(Def_VaxStart/Def_VaxIncrease*(
-#    sqrt(1 + ((2*Def_VaxIncrease*VaxGoalN)/Def_VaxStart^2))-1))
-#  )
 VaxTimes <- seq(
   from=0, by=1,
   to=floor(Re(polyroot(c(-VaxGoalN, Def_VaxStart, Def_VaxIncrease/2)))[1])
@@ -40,7 +32,7 @@ VaxTimes <- seq(
 Parameters <- list(u=Def_u/uScaling, CM=CM, LPeriod=Def_LatentPeriod,
                    IPeriod=Def_InfectiousPeriod, IFR=Def_IFR, 
                    vg=VaxGoalN, ve=Def_VaxEffect, vs=Def_VaxStart, 
-                   vi=Def_VaxIncrease)
+                   vi=Def_VaxIncrease, Priority=c(1,1,1,1,1,1,1,1,1))
 
 State <- c(S=Initial_Condition$S, Sv=Initial_Condition$Sv,
            E=Initial_Condition$E, Ev=Initial_Condition$Ev, 
@@ -50,7 +42,12 @@ State <- c(S=Initial_Condition$S, Sv=Initial_Condition$Sv,
 
 Result <- run_Sim(State, Parameters, Def_Times, VaxTimes)
 
+# AgeDist
+Initial_Condition %>% 
+  pivot_longer(!Age, names_to='State', values_to='N') %>% 
+  plot_BeforeAgeDist()
 plot_Model(Result)
 plot_Model_Zoom(Result)
+plot_AfterAgeDist(Result)
 
 (Result$Totalv/(Result$Totalv + Result$Total))[366]

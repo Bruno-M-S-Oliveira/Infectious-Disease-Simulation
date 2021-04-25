@@ -105,20 +105,21 @@ get_VaxIncrease <- function(input) {
 }
 
 get_Parameters<- function(input) {
-  u       <- get_u(input)
-  CM      <- get_ContactMatrix(get_Country(input))
-  LPeriod <- get_LatentPeriod(input)
-  IPeriod <- get_InfectiousPeriod(input)
-  IFR     <- get_IFR(input)
-  vg      <- get_VaxGoal(input) * sum(get_T0(input))
-  ve      <- get_VaxEffect(input)
-  vs      <- get_VaxStart(input)
-  vi      <- get_VaxIncrease(input)
+  u        <- get_u(input)
+  CM       <- get_ContactMatrix(get_Country(input))
+  LPeriod  <- get_LatentPeriod(input)
+  IPeriod  <- get_InfectiousPeriod(input)
+  IFR      <- get_IFR(input)
+  vg       <- get_VaxGoal(input) * sum(get_T0(input))
+  ve       <- get_VaxEffect(input)
+  vs       <- get_VaxStart(input)
+  vi       <- get_VaxIncrease(input)
+  Priority <- rep(1, 9)
   
   uScaling <- get_u_scaling(u, CM, IPeriod, get_BRN(input))
   
   list(u=u/uScaling, CM=CM, LPeriod=LPeriod, IPeriod=IPeriod, 
-       IFR=IFR, vg=vg, ve=ve, vs=vs, vi=vi)
+       IFR=IFR, vg=vg, ve=ve, vs=vs, vi=vi, Priority=Priority)
 }
 
 # ------Other------

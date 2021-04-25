@@ -57,23 +57,35 @@ vax_Event <- function(t, y, parms) {
   vg <- parms$vg
   vs <- parms$vs
   vi <- parms$vi
+  Priority <- parms$Priority
   
-  ToVax <- sum(S+E)
+  ToVax <- sum(Priority*(S+E))
   VaxToday <- vs + vi*t
   
-  if(ToVax > VaxToday) {
-    dSv <- VaxToday*S/ToVax
-    dEv <- VaxToday*E/ToVax
+  if(ToVax != 0) {
+    if(ToVax > VaxToday) {
+      dSv <- Priority*VaxToday*S/ToVax
+      dEv <- Priority*VaxToday*E/ToVax
+    } else {
+      dSv <- Priority*S + (1-Priority)*VaxToday*S/ToVax
+      dEv <- Priority*E + (1-Priority)*VaxToday*E/ToVax
+    }
   } else {
-    dSv <- S
-    dEv <- E
+    ToVax <- sum(Priority*(S+E))
+    if(ToVax > VaxToday) {
+      dSv <- VaxToday*S/ToVax
+      dEv <- VaxToday*E/ToVax
+    } else {
+      dSv <- S
+      dEv <- E
+    }
   }
   
-  S  <- S  - dSv #VaxToday*vi*S/ToVax
-  Sv <- Sv + dSv #VaxToday*vi*S/ToVax
+  S  <- S  - dSv 
+  Sv <- Sv + dSv 
   
-  E  <- E  - dEv #VaxToday*vi*E/ToVax
-  Ev <- Ev + dEv #VaxToday*vi*E/ToVax
+  E  <- E  - dEv 
+  Ev <- Ev + dEv 
   
   c(S, Sv, E, Ev, I, Iv, R, Rv, D)
 }
