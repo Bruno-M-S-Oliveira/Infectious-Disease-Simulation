@@ -45,4 +45,7 @@ docs/
 po/*~
 
 # Images
-Images/*.tex Images/*.log Images/*.aux Images/*.pdf
+Images/
+
+# Pdfs
+**/*.pdf

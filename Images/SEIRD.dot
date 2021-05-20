@@ -1,0 +1,34 @@
+digraph "Modelo SIRD com Vacinação" {
+        graph[rankdir=LR]
+        //graph[label="Modelo SIRD com Vacina\c{c}\~ao", labelloc=top, labeljust=left]
+
+        node[style="rounded, filled", shape = oval]
+
+        S [label="Suscet\'iveis"         , color="#00BBD8"]
+        Sv[label="Susce\'iveis Vacinados", color="#0CDEFF"]
+        I [label="Infetados"             , color="#C4883B"]
+        Iv[label="Infetados Vacinados"   , color="#D0AD62"]
+        E [label="Expostos"              , color="#695DFF"]
+        Ev[label="Expostos Vacinados"    , color="#9890FF"]
+        R [label="Recuperados"           , color="#3BC455"]
+        Rv[label="Recuperados Vacinados" , color="#62D077"]
+        D [label="Mortos"                , color="#FC797F"]
+
+        subgraph { S Sv   rank  = same }
+        subgraph { E Ev   rank  = same }
+        subgraph { I Iv   rank  = same }
+        subgraph { R Rv D rank  = same }
+
+        S  -> Sv [label="$\frac{V_D}{S+E}$"]
+        S  -> E  [label="$\Lambda$"]
+        E  -> Ev [label="$\frac{V_D}{S+E}$"]
+        E  -> I  [label="$\frac{1}{\tau_E}$"]
+        I  -> R  [label="$\frac{(1-\mu)}{\tau_I}$"]
+        I  -> D  [label="$\frac{\mu}{\tau_I}$"]
+        Sv -> Ev [label="$\Lambda$"]
+        Ev -> Iv [label="$\frac{1}{\tau_E}$"]
+        Iv -> Rv [label="$\frac{(1-\mu_V)}{\tau_I}$"]
+        Iv -> D  [label="$\frac{\mu_V}{\tau_I}$"]
+        R  -> S  [label="TBD"]
+        Rv -> Sv [label="TBD"]
+}
