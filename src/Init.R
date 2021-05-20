@@ -23,6 +23,11 @@ source('Parameters.R')
 
 # ggplot
 theme_set(theme_bw())
+theme_update(
+  text = element_text(size = 14),
+  plot.title = element_text(hjust = 0.5),
+  legend.position = "none",
+  )
 
 SEIRD_theme <- scale_color_manual(
   name = "Estado",
@@ -33,17 +38,12 @@ SEIRD_theme <- scale_color_manual(
   limits=c("S", "Sv", "E", "Ev", "I", "Iv", "R", "Rv", "D")
   )
 
-alllabels_theme <- theme(
-  plot.title = element_text(size = 12, face = "plain"),
-  legend.position = "none"
-  )
-
-onlyx_theme <- alllabels_theme + theme(
+onlyx_theme <- theme(
   axis.title.y = element_blank(),
   axis.text.y = element_blank()
   )
 
-onlyy_theme <- alllabels_theme + theme(
+onlyy_theme <- theme(
   axis.title.x = element_blank(),
   axis.text.x = element_blank()
   )

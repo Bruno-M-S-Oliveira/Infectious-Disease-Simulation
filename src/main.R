@@ -32,7 +32,7 @@ VaxTimes <- seq(
 Parameters <- list(u=Def_u/uScaling, CM=CM, LPeriod=Def_LatentPeriod,
                    IPeriod=Def_InfectiousPeriod, IFR=Def_IFR, 
                    vg=VaxGoalN, ve=Def_VaxEffect, vs=Def_VaxStart, 
-                   vi=Def_VaxIncrease, Priority=c(1,1,1,1,1,1,1,1,1))
+                   vi=Def_VaxIncrease, Priority=Def_Priority)
 
 State <- c(S=Initial_Condition$S, Sv=Initial_Condition$Sv,
            E=Initial_Condition$E, Ev=Initial_Condition$Ev, 

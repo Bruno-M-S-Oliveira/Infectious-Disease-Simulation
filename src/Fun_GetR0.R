@@ -14,8 +14,8 @@ get_R0 <- function(u, CM, InfectiousPeriod) {
 }
 
 get_u_scaling <- function(u, CM, InfectiousPeriod, ExpectedR0) {
-  MaxScale <- 10
-  MinScale <- 100
+  MaxScale <- 1
+  MinScale <- 1000
   MaxR0 <- get_R0(u/MaxScale, CM, InfectiousPeriod)
   MinR0 <- get_R0(u/MinScale, CM, InfectiousPeriod)
   

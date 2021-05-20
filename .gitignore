@@ -44,3 +44,5 @@ docs/
 # translation temp files
 po/*~
 
+# Images
+Images/*.tex Images/*.log Images/*.aux Images/*.pdf

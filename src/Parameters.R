@@ -21,6 +21,12 @@ Def_VaxGoal     <- .70
 Def_VaxStart    <- 2000
 Def_VaxIncrease <- 400
 
+Def_Priority1 <- c(0,0,0,0,0,0,1,1,1)
+Def_Priority2 <- c(0,0,0,1,1,1,0,0,0)
+Def_Priority3 <- c(1,1,1,0,0,0,0,0,0)
+
+Def_Priority <- Def_Priority1
+
 # Population distribution
 # Thanks to https://github.com/dssg-pt/covid19pt-data
 # Note: Cases from unknown people are ignored

@@ -6,18 +6,21 @@
 # Extra functions to avoid cluttering up the code
 
 plot_BeforeAgeDist <- function(DistData) {
-  ggplot(data=DistData, aes(x=Age, fill=State)) + alllabels_theme + SEIRD_theme +
-    theme(legend.position='top') +
+  ggplot(data=DistData, aes(x=Age, fill=State)) + SEIRD_theme +
+    ggtitle("Distribuição Populacional Antes da Simulação") +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
-    geom_bar(aes(weight=N))
+    geom_bar(aes(weight=N)) +
+    theme(legend.position='top') +
+    guides(color=guide_legend(nrow=1))
 }
 
 plot_Model <- function(Result) {
   Result %>% 
     select(time, S, Sv, E, Ev, I, Iv, R, Rv, D) %>% 
     pivot_longer(!time, names_to='State', values_to='N') %>% 
-    ggplot(aes(x=time, y=N, color=State)) + alllabels_theme + SEIRD_theme +
+    ggplot(aes(x=time, y=N, color=State)) + SEIRD_theme +
+    ggtitle("Simulação") +
     scale_x_continuous('Dia') +
     scale_y_continuous('Número de Pessoas') +
     geom_point(size=1)
@@ -27,7 +30,8 @@ plot_Model_Zoom <- function(Result) {
   Result %>%
     select(time, E, Ev, I, Iv, Rv, D) %>% 
     pivot_longer(!time, names_to='State', values_to='N') %>% 
-    ggplot(aes(x=time, y=N, color=State)) + alllabels_theme + SEIRD_theme +
+    ggplot(aes(x=time, y=N, color=State)) + SEIRD_theme +
+    ggtitle("Simulação") +
     scale_x_continuous('Dia') +
     scale_y_continuous('Número de Pessoas') +
     geom_point(size=1)
@@ -49,7 +53,8 @@ plot_AfterAgeDist <- function(Result) {
     c(Data$D1, Data$D2, Data$D3, Data$D4, Data$D5, Data$D6, Data$D7, Data$D8, Data$D9)) %>%
     set_colnames(c('Age', 'S', 'Sv', 'E', 'Ev', 'I', 'Iv', 'R', 'Rv', 'D')) %>% 
     pivot_longer(!Age, names_to='State', values_to='N') %>% 
-    ggplot(aes(x=Age, fill=State)) + alllabels_theme + SEIRD_theme +
+    ggplot(aes(x=Age, fill=State)) + SEIRD_theme +
+    ggtitle("Distribuição Populacional Após a Simulação") +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
     geom_bar(aes(weight=N))

@@ -104,6 +104,12 @@ get_VaxIncrease <- function(input) {
   input$VaxIncrease
 }
 
+get_Priority <- function(input) {
+  c(input$Priority1,input$Priority2,input$Priority3,input$Priority4,
+    input$Priority5,input$Priority6,input$Priority7,input$Priority8,
+    input$Priority9)
+}
+
 get_Parameters<- function(input) {
   u        <- get_u(input)
   CM       <- get_ContactMatrix(get_Country(input))
@@ -114,7 +120,7 @@ get_Parameters<- function(input) {
   ve       <- get_VaxEffect(input)
   vs       <- get_VaxStart(input)
   vi       <- get_VaxIncrease(input)
-  Priority <- rep(1, 9)
+  Priority <- get_Priority(input)
   
   uScaling <- get_u_scaling(u, CM, IPeriod, get_BRN(input))
   
