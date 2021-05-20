@@ -4,7 +4,6 @@
 # | |_| || |
 #  \___/|___|
 # UI for the Shiny App
-rm(list=ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source('Init.R')
@@ -21,16 +20,25 @@ fluidPage(
       
       h4("Parâmetros"),
       fluidRow(align='center',
-               column(3, selectInput("Country", "País:",
-                                     c("Portugal" = "PRT",
-                                       "Estados Unidos" = "USA",
-                                       "Espanha" = "ESP"))),
-               column(3, numericInput("LPeriod", "Período Latente", 
-                                      min=0, value=Def_LatentPeriod, max=20)),
-               column(3, numericInput("IPeriod", "Período Infeccioso",
-                                      min=0, value=Def_InfectiousPeriod, max=20)),
-               column(3, numericInput("BRN", "R0", #"Número Básico de Reprodução",
+               column(4, selectInput("Country", "País:",
+                                     c("Portugal"       = "PRT",
+                                       "Espanha"        = "ESP",
+                                       "Estados Unidos" = "USA"))),
+               column(4, selectInput("Area", "Área:",
+                                     c("Global" = 0,
+                                       "Rural"  = 1,
+                                       "Urbana" = 2))),
+               column(4, numericInput("BRN", "R0",
                                       min=0, value=Def_BRN)),
+      ),
+      
+      fluidRow(align='center',
+               column(4, numericInput("EPeriod", "Período Latente", 
+                                      min=1, value=Def_EPeriod, max=24)),
+               column(4, numericInput("IPeriod", "Período Infeccioso",
+                                      min=1, value=Def_IPeriod, max=24)),
+               column(4, numericInput("RPeriod", "Período de Imunidade",
+                                      min=1, value=Def_RPeriod, max=1000)),
       ),
       
       fluidRow(align='center',

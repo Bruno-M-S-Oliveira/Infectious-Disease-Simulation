@@ -1,11 +1,9 @@
-#  ____
-# / ___|  ___ _ ____   _____ _ __
-# \___ \ / _ \ '__\ \ / / _ \ '__|
-#  ___) |  __/ |   \ V /  __/ |
-# |____/ \___|_|    \_/ \___|_|
-# Server for the Shiny App
-
-rm(list=ls())
+#  __  __       _
+# |  \/  | __ _(_)_ __
+# | |\/| |/ _` | | '_ \
+# | |  | | (_| | | | | |
+# |_|  |_|\__,_|_|_| |_|
+# Example simulation
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source('Init.R')
@@ -20,8 +18,8 @@ Initial_Condition <- data.frame(Age, Def_Sv0, Def_E0, Def_Ev0, Def_I0, Def_Iv0,
 
 
 # Simulation
-CM <- get_ContactMatrix(Def_Country)
-uScaling <- get_u_scaling(Def_u, CM, Def_InfectiousPeriod, Def_BRN)
+CM <- get_ContactMatrix(Def_Country, "Global")
+uScaling <- get_u_scaling(Def_u, CM, Def_IPeriod, Def_BRN)
 
 VaxGoalN <- Def_VaxGoal*sum(Def_T0)
 VaxTimes <- seq(
@@ -29,9 +27,9 @@ VaxTimes <- seq(
   to=floor(Re(polyroot(c(-VaxGoalN, Def_VaxStart, Def_VaxIncrease/2)))[1])
   )
 
-Parameters <- list(u=Def_u/uScaling, CM=CM, LPeriod=Def_LatentPeriod,
-                   IPeriod=Def_InfectiousPeriod, IFR=Def_IFR, 
-                   vg=VaxGoalN, ve=Def_VaxEffect, vs=Def_VaxStart, 
+Parameters <- list(u=Def_u/uScaling, CM=CM, EPeriod=Def_EPeriod,
+                   IPeriod=Def_IPeriod, RPeriod=Def_RPeriod,
+                   IFR=Def_IFR, vg=VaxGoalN, ve=Def_VaxEffect, vs=Def_VaxStart, 
                    vi=Def_VaxIncrease, Priority=Def_Priority)
 
 State <- c(S=Initial_Condition$S, Sv=Initial_Condition$Sv,
@@ -43,8 +41,12 @@ State <- c(S=Initial_Condition$S, Sv=Initial_Condition$Sv,
 Result <- run_Sim(State, Parameters, Def_Times, VaxTimes)
 
 # AgeDist
-Initial_Condition %>% 
-  pivot_longer(!Age, names_to='State', values_to='N') %>% 
+Dist_Data <- Initial_Condition %>% 
+  pivot_longer(!Age, names_to='State', values_to='N')
+  
+Teste <- Result %>% 
+  select(time, S, Sv, E, Ev, I, Iv, R, Rv, D) %>% 
+  pivot_longer(!time, names_to='State', values_to='N') %>% 
   plot_BeforeAgeDist()
 plot_Model(Result)
 plot_Model_Zoom(Result)

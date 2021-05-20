@@ -5,7 +5,7 @@
 # |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
 # Extra functions to avoid cluttering up the code
 
-SIRD_Model <- function(t, y, parms) {
+SEIRDS_Model <- function(t, y, parms) {
   S  <- y[1:9]
   Sv <- y[10:18]
   E  <- y[19:27]
@@ -18,31 +18,25 @@ SIRD_Model <- function(t, y, parms) {
   
   Total <- S+Sv + E+Ev + I+Iv + R+Rv
   
-  u     <- parms$u
-  CM    <- parms$CM
-  alpha <- 1/parms$LPeriod
-  gamma <- (1-parms$IFR)/parms$IPeriod
-  mu    <- parms$IFR/parms$IPeriod
-  ve    <- parms$ve
+  u      <- parms$u
+  CM     <- parms$CM
+  alpha  <- 1/parms$EPeriod
+  gamma  <- (1-parms$IFR)/parms$IPeriod
+  RDecay <- 1/parms$RPeriod
+  mu     <- parms$IFR/parms$IPeriod
+  ve     <- parms$ve
   
-  t
-  dS  <- - (CM%*%(((I+(1-ve)*Iv)/Total))*u)*S
-  dSv <- - (CM%*%(((I+(1-ve)*Iv)/Total))*u)*Sv
-  #dS  <- - (CM%*%(((I+ve*Iv)/Total))*u)*S
-  #dSv <- - (CM%*%(((I+ve*Iv)/Total))*u)*Sv
+  dS  <- - (CM%*%(((I+(1-ve)*Iv)/Total))*u)*S  + RDecay*R
+  dSv <- - (CM%*%(((I+(1-ve)*Iv)/Total))*u)*Sv + RDecay*Rv
   
   dE  <- + (CM%*%(((I+(1-ve)*Iv)/Total))*u)*S  - alpha*E
   dEv <- + (CM%*%(((I+(1-ve)*Iv)/Total))*u)*Sv - alpha*Ev
-  #dE  <- + (CM%*%(((I+ve*Iv)/Total))*u)*S  - alpha*E
-  #dEv <- + (CM%*%(((I+ve*Iv)/Total))*u)*Sv - alpha*Ev
   
-  dI  <-        alpha*E  - (gamma+mu)*I
-  dIv <-        alpha*Ev - (gamma+mu)*Iv
-  #dIv <- (1-ve)*alpha*Ev - (gamma+mu)*Iv
+  dI  <- alpha*E  - (gamma+mu)*I
+  dIv <- alpha*Ev - (gamma+mu)*Iv
   
-  dR  <-               gamma*I
-  dRv <-               gamma*Iv + ve*mu*Iv
-  #dRv <- ve*alpha*Ev + gamma*Iv
+  dR  <- gamma*I             - RDecay*R
+  dRv <- gamma*Iv + ve*mu*Iv - RDecay*Rv
   
   dD  <- mu*(I+(1-ve)*Iv)
   
@@ -68,29 +62,22 @@ vax_Event <- function(t, y, parms) {
   ToVax <- sum(Priority*(S+E))
   VaxToday <- vs + vi*t
   
-  if(ToVax != 0) {
-    if(ToVax > VaxToday) {
-      dSv <- Priority*VaxToday*S/ToVax
-      dEv <- Priority*VaxToday*E/ToVax
-    } else {
-      dSv <- Priority*S
-      dEv <- Priority*E 
-      
-      ToVax <- sum((1-Priority)*S+E)
-      VaxToday <- VaxToday - sum(dSv + dEv)
-      
-      dSv <- dSv + VaxToday*((1-Priority)*S)/ToVax
-      dEv <- dEv + VaxToday*((1-Priority)*E)/ToVax
-    }
+  if(ToVax > VaxToday) {
+    dSv <- Priority*VaxToday*S/ToVax
+    dEv <- Priority*VaxToday*E/ToVax
   } else {
-    ToVax <- sum(S+E)
+    dSv <- Priority*S
+    dEv <- Priority*E 
+    
+    ToVax <- sum((1-Priority)*(S+E))
+    VaxToday <- VaxToday - sum(dSv + dEv)
     
     if(ToVax > VaxToday) {
-      dSv <- VaxToday*S/ToVax
-      dEv <- VaxToday*E/ToVax
+      dSv <- dSv + VaxToday*((1-Priority)*S)/ToVax
+      dEv <- dEv + VaxToday*((1-Priority)*E)/ToVax
     } else {
-      dSv <- S
-      dEv <- E
+      dSv <- dSv + (1-Priority)*S
+      dEv <- dEv + (1-Priority)*E
     }
   }
   
@@ -106,7 +93,7 @@ vax_Event <- function(t, y, parms) {
 run_Sim <- function(State, Parameters, Times, VaxTimes) {
   as.data.frame(lsoda(
     y=State, times=Def_Times, parms=Parameters, 
-    func=SIRD_Model, events=list(func=vax_Event, time=VaxTimes))) %>% 
+    func=SEIRDS_Model, events=list(func=vax_Event, time=VaxTimes))) %>% 
     mutate(S=S1+S2+S3+S4+S5+S6+S7+S8+S9) %>% 
     mutate(Sv=Sv1+Sv2+Sv3+Sv4+Sv5+Sv6+Sv7+Sv8+Sv9) %>% 
     mutate(E=E1+E2+E3+E4+E5+E6+E7+E8+E9) %>% 

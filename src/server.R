@@ -4,7 +4,6 @@
 #  ___) |  __/ |   \ V /  __/ |
 # |____/ \___|_|    \_/ \___|_|
 # Server for the Shiny App
-rm(list=ls())
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source('Init.R')

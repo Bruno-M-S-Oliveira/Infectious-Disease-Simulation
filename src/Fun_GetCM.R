@@ -55,9 +55,14 @@ extrapolate <- function(CM_10) {
   return(CM_Final)
 }
 
-get_ContactMatrix <- function(Country) {
+get_ContactMatrix <- function(Country, Area) {
   # Thanks to https://github.com/kieshaprem/synthetic-contact-matrices
-  load("../synthetic-contact-matrices/output/syntheticcontactmatrices2020/overall/contact_all.rdata")
+  if(Area == 1)
+    load("../synthetic-contact-matrices/output/syntheticcontactmatrices2020/rural/contact_all_rural.rdata")
+  else if(Area == 2)
+    load("../synthetic-contact-matrices/output/syntheticcontactmatrices2020/urban/contact_all_urban.rdata")
+  else
+    load("../synthetic-contact-matrices/output/syntheticcontactmatrices2020/overall/contact_all.rdata")
   
   CM_5 <- contact_all[[Country]]
   CM_10 <- convert_bins(CM_5)

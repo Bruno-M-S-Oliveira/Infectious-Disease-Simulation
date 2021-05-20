@@ -4,7 +4,6 @@
 #  | || | | | | |_
 # |___|_| |_|_|\__|
 # Things that are useful to do in the beginning
-
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Clear All Variables
@@ -29,7 +28,7 @@ theme_update(
   legend.position = "none",
   )
 
-SEIRD_theme <- scale_color_manual(
+SEIRDS_theme <- scale_color_manual(
   name = "Estado",
   aesthetics = c("colour", "fill"),
   values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62", 

@@ -4,7 +4,6 @@
 # |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
 # |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
 # Extra functions to avoid cluttering up the code
-
 source('Fun_GetCM.R')
 
 # ------Initial State------
@@ -71,16 +70,24 @@ get_Country <- function(input) {
   input$Country
 }
 
+get_Area <- function(input) {
+  input$Area
+}
+
 get_BRN <- function(input) {
   input$BRN
 }
 
 get_LatentPeriod <- function(input) {
-  input$LPeriod
+  input$EPeriod
 }
 
 get_InfectiousPeriod <- function(input) {
   input$IPeriod
+}
+
+get_ImmunityPeriod <- function(input) {
+  input$RPeriod
 }
 
 get_IFR <- function(input) {
@@ -112,9 +119,10 @@ get_Priority <- function(input) {
 
 get_Parameters<- function(input) {
   u        <- get_u(input)
-  CM       <- get_ContactMatrix(get_Country(input))
-  LPeriod  <- get_LatentPeriod(input)
+  CM       <- get_ContactMatrix(get_Country(input), get_Area(input))
+  EPeriod  <- get_LatentPeriod(input)
   IPeriod  <- get_InfectiousPeriod(input)
+  RPeriod  <- get_ImmunityPeriod(input)
   IFR      <- get_IFR(input)
   vg       <- get_VaxGoal(input) * sum(get_T0(input))
   ve       <- get_VaxEffect(input)
@@ -124,7 +132,7 @@ get_Parameters<- function(input) {
   
   uScaling <- get_u_scaling(u, CM, IPeriod, get_BRN(input))
   
-  list(u=u/uScaling, CM=CM, LPeriod=LPeriod, IPeriod=IPeriod, 
+  list(u=u/uScaling, CM=CM, EPeriod=EPeriod, IPeriod=IPeriod, RPeriod=RPeriod,
        IFR=IFR, vg=vg, ve=ve, vs=vs, vi=vi, Priority=Priority)
 }
 

@@ -5,7 +5,7 @@
 
 all: run
 
-run: SEIRD.pdf
+run: SEIRDS.pdf
 	xdg-open $^
 
 %.pdf: %.tex

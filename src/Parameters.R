@@ -11,9 +11,12 @@ Def_Times <- seq(0, 365, by=1)
 Def_Country <- "PRT"
 Def_BRN <- 1.100480645 # Basic reproductive number (R0 is already used...)
 
+
+Def_EPeriod <- 3   # Days
+Def_IPeriod <- 5   # Days
+Def_RPeriod <- 365 # Days
+
 Def_u <-c(.4, .38, .79, .86, .8, .82, .88, .74, .74)
-Def_LatentPeriod <- 3 # Days
-Def_InfectiousPeriod <- 5 # Days
 Def_IFR <- c(.001, .003, .01, .04, .12, .40, 1.36, 4.55, 15.24)/100
 
 Def_VaxEffect   <- .95
@@ -63,8 +66,6 @@ Def_T0 <- c(841076,1015166,1073698,1215309,1575911,1481007,
             1293824,1018314,682402)
 
 # Number of deaths
-#Def_D0 <- c(Data$D_0,Data$D_10,Data$D_20,Data$D_30,Data$D_40,
-#            Data$D_50,Data$D_60,Data$D_70,Data$D_80)
 Def_D0 <- rep(0, 9)
 
 # Number of recoveries
