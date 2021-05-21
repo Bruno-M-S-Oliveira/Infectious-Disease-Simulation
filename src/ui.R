@@ -15,10 +15,15 @@ fluidPage(
   titlePanel("Projeto de LID"),
   
   sidebarLayout(
-    sidebarPanel(
+    sidebarPanel(align='center',
       width=7,
       
-      h4("Parâmetros"),
+      h3("Ao Longo da Simulação:"),
+      textOutput("Infections"),
+      textOutput("Deaths"),
+      textOutput("YLL"),
+      
+      h3("Parâmetros"),
       fluidRow(align='center',
                column(4, selectInput("Country", "País:",
                                      c("Portugal"       = "PRT",
@@ -52,6 +57,23 @@ fluidPage(
                                       min=0, value=Def_VaxIncrease)),
       ),
       
+      h4("Prioridades"),
+      fluidRow(align='center',
+        column(4, checkboxInput("Priority1", label=Age[1], value=Def_Priority[1])),
+        column(4, checkboxInput("Priority2", label=Age[2], value=Def_Priority[2])),
+        column(4, checkboxInput("Priority3", label=Age[3], value=Def_Priority[3])),
+      ),
+      fluidRow(align='center',
+        column(4, checkboxInput("Priority4", label=Age[4], value=Def_Priority[4])),
+        column(4, checkboxInput("Priority5", label=Age[5], value=Def_Priority[5])),
+        column(4, checkboxInput("Priority6", label=Age[6], value=Def_Priority[6])),
+      ),
+      fluidRow(align='center',
+        column(4, checkboxInput("Priority7", label=Age[7], value=Def_Priority[7])),
+        column(4, checkboxInput("Priority8", label=Age[8], value=Def_Priority[8])),
+        column(4, checkboxInput("Priority9", label=Age[9], value=Def_Priority[9])),
+      ),
+      
       h4(Age[1]),
       fluidRow(align='center',
         column(2, numericInput("T0_1", "Pessoas"    , min=0, value=Def_T0[1])),
@@ -61,8 +83,8 @@ fluidPage(
                                min=0, value=100*Def_u[1], max=100)),
         column(2, numericInput("IFR_1", "Mortalidade",
                                min=0, value=100*Def_IFR[1], max=100)),
-        column(2, checkboxInput("Priority1", label="Prioridade", 
-                                value=Def_Priority[1]))
+        column(2, numericInput("LE_1", "EMV",
+                               min=0, value=Def_LifeExp[1], max=100))
       ),
       
       h4(Age[2]),
@@ -74,8 +96,8 @@ fluidPage(
                                min=0, value=100*Def_u[2], max=100)),
         column(2, numericInput("IFR_2", "Mortalidade",
                                min=0, value=100*Def_IFR[2], max=100)),
-        column(2, checkboxInput("Priority2", label="Prioridade", 
-                                value=Def_Priority[2]))
+        column(2, numericInput("LE_2", "EMV",
+                               min=0, value=Def_LifeExp[2], max=100))
       ),
       
       h4(Age[3]),
@@ -87,8 +109,8 @@ fluidPage(
                                min=0, value=100*Def_u[3], max=100)),
         column(2, numericInput("IFR_3", "Mortalidade",
                                min=0, value=100*Def_IFR[3], max=100)),
-        column(2, checkboxInput("Priority3", label="Prioridade", 
-                                value=Def_Priority[3]))
+        column(2, numericInput("LE_3", "EMV",
+                               min=0, value=Def_LifeExp[3], max=100))
       ),
       
       h4(Age[4]),
@@ -100,8 +122,8 @@ fluidPage(
                                min=0, value=100*Def_u[4], max=100)),
         column(2, numericInput("IFR_4", "Mortalidade",
                                min=0, value=100*Def_IFR[4], max=100)),
-        column(2, checkboxInput("Priority4", label="Prioridade", 
-                                value=Def_Priority[4]))
+        column(2, numericInput("LE_4", "EMV",
+                               min=0, value=Def_LifeExp[4], max=100))
       ),
       
       h4(Age[5]),
@@ -113,8 +135,8 @@ fluidPage(
                                min=0, value=100*Def_u[5], max=100)),
         column(2, numericInput("IFR_5", "Mortalidade",
                                min=0, value=100*Def_IFR[5], max=100)),
-        column(2, checkboxInput("Priority5", label="Prioridade", 
-                                value=Def_Priority[5]))
+        column(2, numericInput("LE_5", "EMV",
+                               min=0, value=Def_LifeExp[5], max=100))
       ),
       
       h4(Age[6]),
@@ -126,8 +148,8 @@ fluidPage(
                                min=0, value=100*Def_u[6], max=100)),
         column(2, numericInput("IFR_6", "Mortalidade",
                                min=0, value=100*Def_IFR[6], max=100)),
-        column(2, checkboxInput("Priority6", label="Prioridade", 
-                                value=Def_Priority[6]))
+        column(2, numericInput("LE_6", "EMV",
+                               min=0, value=Def_LifeExp[6], max=100))
       ),
       
       h4(Age[7]),
@@ -139,8 +161,8 @@ fluidPage(
                                min=0, value=100*Def_u[7], max=100)),
         column(2, numericInput("IFR_7", "Mortalidade",
                                min=0, value=100*Def_IFR[7], max=100)),
-        column(2, checkboxInput("Priority7", label="Prioridade", 
-                                value=Def_Priority[7]))
+        column(2, numericInput("LE_7", "EMV",
+                               min=0, value=Def_LifeExp[7], max=100))
       ),
       
       h4(Age[8]),
@@ -152,8 +174,8 @@ fluidPage(
                                min=0, value=100*Def_u[8], max=100)),
         column(2, numericInput("IFR_8", "Mortalidade",
                                min=0, value=100*Def_IFR[8], max=100)),
-        column(2, checkboxInput("Priority8", label="Prioridade", 
-                                value=Def_Priority[8]))
+        column(2, numericInput("LE_8", "EMV",
+                               min=0, value=Def_LifeExp[8], max=100))
       ),
       
       h4(Age[9]),
@@ -165,8 +187,8 @@ fluidPage(
                                min=0, value=100*Def_u[9], max=100)),
         column(2, numericInput("IFR_9", "Mortalidade",
                                min=0, value=100*Def_IFR[9], max=100)),
-        column(2, checkboxInput("Priority9", label="Prioridade", 
-                                value=Def_Priority[9]))
+        column(2, numericInput("LE_9", "EMV",
+                               min=0, value=Def_LifeExp[9], max=100))
       )),
     
   mainPanel(

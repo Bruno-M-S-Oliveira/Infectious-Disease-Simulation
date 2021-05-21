@@ -74,6 +74,11 @@ get_Area <- function(input) {
   input$Area
 }
 
+get_LifeExp <- function(input) {
+  c(input$LE_1,input$LE_2,input$LE_3,input$LE_4,input$LE_5,
+    input$LE_6,input$LE_7,input$LE_8,input$LE_9)
+}
+
 get_BRN <- function(input) {
   input$BRN
 }

@@ -38,7 +38,7 @@ plot_Model_Zoom <- function(Result) {
 }
 
 plot_AfterAgeDist <- function(Result) {
-  Data <- Result[366,]
+  Data <- Result[nrow(Result),]
   
   data.frame(
     Age, 
