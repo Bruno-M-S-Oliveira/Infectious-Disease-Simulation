@@ -3,9 +3,9 @@
 .PHONY: all run clean
 .DEFAULT: all
 
-all: run
+all: SEIRDS.pdf SEIRDS_Vax.pdf
 
-run: SEIRDS.pdf
+run: SEIRDS.pdf SEIRDS_Vax.pdf
 	xdg-open $^
 
 %.pdf: %.tex

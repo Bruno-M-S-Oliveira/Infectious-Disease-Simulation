@@ -11,25 +11,26 @@ source('Fun_GetUI.R')
 source('Fun_Sim.R')
 source('Fun_Plots.R')
 
-fluidPage(
+fluidPage(align='center',
   titlePanel("Projeto de LID"),
   
   sidebarLayout(
     sidebarPanel(align='center',
       width=7,
       
-      h3("Ao Longo da Simulação:"),
+      h3("Ao Longo da Simulação"),
       textOutput("Infections"),
       textOutput("Deaths"),
       textOutput("YLL"),
       
       h3("Parâmetros"),
+      h4("Matriz de Contactos"),
       fluidRow(align='center',
-               column(4, selectInput("Country", "País:",
+               column(4, selectInput("Country", "País",
                                      c("Portugal"       = "PRT",
                                        "Espanha"        = "ESP",
                                        "Estados Unidos" = "USA"))),
-               column(4, selectInput("Area", "Área:",
+               column(4, selectInput("Area", "Região",
                                      c("Global" = 0,
                                        "Rural"  = 1,
                                        "Urbana" = 2))),
@@ -37,6 +38,7 @@ fluidPage(
                                       min=0, value=Def_BRN)),
       ),
       
+      h4("Doença"),
       fluidRow(align='center',
                column(4, numericInput("EPeriod", "Período Latente", 
                                       min=1, value=Def_EPeriod, max=24)),
@@ -46,18 +48,19 @@ fluidPage(
                                       min=1, value=Def_RPeriod, max=1000)),
       ),
       
+      h4("Vacinação"),
       fluidRow(align='center',
-               column(3, numericInput("VaxGoal", "Imunidade de Rebanho (%)", 
+               column(3, numericInput("VaxGoal", "População a Vacinar (%)", 
                                       min=0, value=100*Def_VaxGoal, max=100)),
-               column(3, numericInput("VaxEffect", "Eficácia das Vacinas (%)", 
-                                      min=0, value=100*Def_VaxEffect, max=100)),
-               column(3, numericInput("VaxStart", "Número Inicial de Vacinas", 
+               column(3, numericInput("VaxStart", "Número Inicial de Doses", 
                                       min=0, value=Def_VaxStart)),
-               column(3, numericInput("VaxIncrease", "Aumento Diário de Vacinas", 
+               column(3, numericInput("VaxIncrease", "Aumento Diário de Doses", 
                                       min=0, value=Def_VaxIncrease)),
+               column(3, numericInput("VaxEffect", "Eficácia (%)", 
+                                      min=0, value=100*Def_VaxEffect, max=100)),
       ),
       
-      h4("Prioridades"),
+      h5("Grupos Prioritários"),
       fluidRow(align='center',
         column(4, checkboxInput("Priority1", label=Age[1], value=Def_Priority[1])),
         column(4, checkboxInput("Priority2", label=Age[2], value=Def_Priority[2])),
@@ -74,7 +77,8 @@ fluidPage(
         column(4, checkboxInput("Priority9", label=Age[9], value=Def_Priority[9])),
       ),
       
-      h4(Age[1]),
+      h4("Por Faixa Etária"),
+      h5("Dos 0 aos 9 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_1", "Pessoas"    , min=0, value=Def_T0[1])),
         column(2, numericInput("I0_1", "Infetadas"  , min=0, value=Def_I0[1])),
@@ -87,7 +91,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[1], max=100))
       ),
       
-      h4(Age[2]),
+      h5("Dos 10 aos 19 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_2", "Pessoas"    , min=0, value=Def_T0[2])),
         column(2, numericInput("I0_2", "Infetadas"  , min=0, value=Def_I0[2])),
@@ -100,7 +104,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[2], max=100))
       ),
       
-      h4(Age[3]),
+      h5("Dos 20 aos 29 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_3", "Pessoas"    , min=0, value=Def_T0[3])),
         column(2, numericInput("I0_3", "Infetadas"  , min=0, value=Def_I0[3])),
@@ -113,7 +117,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[3], max=100))
       ),
       
-      h4(Age[4]),
+      h5("Dos 30 aos 39 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_4", "Pessoas"    , min=0, value=Def_T0[4])),
         column(2, numericInput("I0_4", "Infetadas"  , min=0, value=Def_I0[4])),
@@ -126,7 +130,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[4], max=100))
       ),
       
-      h4(Age[5]),
+      h5("Dos 40 aos 49 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_5", "Pessoas"    , min=0, value=Def_T0[5])),
         column(2, numericInput("I0_5", "Infetadas"  , min=0, value=Def_I0[5])),
@@ -139,7 +143,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[5], max=100))
       ),
       
-      h4(Age[6]),
+      h5("Dos 50 aos 59 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_6", "Pessoas"    , min=0, value=Def_T0[6])),
         column(2, numericInput("I0_6", "Infetadas"  , min=0, value=Def_I0[6])),
@@ -152,7 +156,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[6], max=100))
       ),
       
-      h4(Age[7]),
+      h5("Dos 60 aos 69 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_7", "Pessoas"    , min=0, value=Def_T0[7])),
         column(2, numericInput("I0_7", "Infetadas"  , min=0, value=Def_I0[7])),
@@ -165,7 +169,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[7], max=100))
       ),
       
-      h4(Age[8]),
+      h5("Dos 70 aos 79 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_8", "Pessoas"    , min=0, value=Def_T0[8])),
         column(2, numericInput("I0_8", "Infetadas"  , min=0, value=Def_I0[8])),
@@ -178,7 +182,7 @@ fluidPage(
                                min=0, value=Def_LifeExp[8], max=100))
       ),
       
-      h4(Age[9]),
+      h5("Mais de 80 anos"),
       fluidRow(align='center',
         column(2, numericInput("T0_9", "Pessoas"    , min=0, value=Def_T0[9])),
         column(2, numericInput("I0_9", "Infetadas"  , min=0, value=Def_I0[9])),

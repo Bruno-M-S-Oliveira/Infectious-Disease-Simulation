@@ -1,0 +1,87 @@
+% -----Geometry-----
+\usepackage[margin=2cm,headheight=12pt]{geometry}
+
+% -----Font & Spacing-----
+% Font
+%\usepackage{mathptmx} % Times
+%\usepackage{helvet}
+%\usepackage{charter}
+%\usepackage{tgpagella}
+
+\usepackage{courier} % For texttt
+
+% Family
+%\renewcommand{\familydefault}{\sfdefault}
+%\renewcommand{\familydefault}{\rmdefault}
+
+% Spacing
+\usepackage{setspace}
+\onehalfspacing
+
+% -----Abstract-----
+\usepackage{abstract}
+\setlength{\absleftindent}{0mm}
+\setlength{\absrightindent}{0mm}
+\setlength{\abstitleskip}{0mm}
+
+\newcommand*{\keywords}[1]{\normalsize \textsc{Keywords:} #1}
+
+% -----Table of Contents-----
+%\usepackage{tocloft}
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+% -----Sections-----
+\usepackage{titlesec,indentfirst}
+
+%\renewcommand{\thesection}{\Roman{section}}
+%\titleformat{\section}[hang]
+%{\Large\bfseries}{\thesection}
+%{3mm}{}[]
+
+%\renewcommand{\thesubsection}{(\roman{subsection})}
+%\titleformat{\section}[hang]
+%\titleformat{\subsection}[hang]
+%{\large\bfseries}{\thesection.\thesubsection.}
+%{2mm}{}[]
+
+%\titleformat{\subsubsection}[hang]
+%{\bfseries}{\thesubsubsection.}
+%{1.5mm}{}[]
+
+% -----Floats-----
+\newcommand{\source}[1]{\hfill Fonte: #1}
+
+% -----Cross-referencing-----
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage[nameinlink,noabbrev,brazilian]{cleveref}
+
+\crefname{section}{secção}{secções}
+\Crefname{section}{Secção}{Secções}
+
+%\numberwithin{equation}{section}
+\let\oref\ref
+\AtBeginDocument{\renewcommand{\ref}[1]{\cref{#1}}}
+
+%\usepackage[norefs]{refcheck}
+
+% -----Code Listings-----
+\lstset{
+    language=[LaTeX]TeX,
+    basicstyle=\small\ttfamily
+}
+
+% -----Bibliography-----
+\usepackage{csquotes}
+\usepackage[
+backend=biber,
+style=alphabetic,
+style=numeric,
+sorting=none
+]{biblatex}
+\addbibresource{Bibliography.bib}
+
+% -----Other-----
+\newcommand*{\cc}{\c{c}}
+\newcommand{\NA}{\textbf{---}}
+%\overfullrule=1mm

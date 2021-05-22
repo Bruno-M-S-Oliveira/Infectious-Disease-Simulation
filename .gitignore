@@ -47,5 +47,10 @@ po/*~
 # Images
 Images/
 
-# Pdfs
+# TeX
 **/*.pdf
+**/*.log
+**/*.aux
+**/*.run.xml
+**/*.out
+**/*.bcf
