@@ -34,17 +34,24 @@ SEIRDS_theme <- scale_color_manual(
   values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62", 
              "I"="#695DFF", "Iv"="#9890FF", "R"="#3BC455", "Rv"="#62D077",
              "D"="#FC717F"),
+  labels = c("Suscetíveis", "Susptíveis e Vacinados",
+             "Expostos", "Expostos e Vacinados", 
+             "Infetados", "Infetados e Vacinados",
+             "Recuperados", "Recuperados e Vacinados",
+             "Mortos"),
   limits=c("S", "Sv", "E", "Ev", "I", "Iv", "R", "Rv", "D")
   )
 
 onlyx_theme <- theme(
   axis.title.y = element_blank(),
-  axis.text.y = element_blank()
+  axis.text.y = element_blank(),
+  axis.ticks.y = element_blank()
   )
 
 onlyy_theme <- theme(
   axis.title.x = element_blank(),
-  axis.text.x = element_blank()
+  axis.text.x = element_blank(),
+  axis.ticks.x = element_blank()
   )
 
 nolabels_theme <- onlyx_theme + onlyy_theme

@@ -26,14 +26,36 @@ function(input, output) {
     run_Sim(Group, Parameters, get_Times(input), get_VaxTimes(input))
   })
     
-  output$Plots <- renderPlot({
-    DistData <- getDistData()
-    Result <- getResult()
-    
-    plot_grid(ncol=1, align = "v", plot_BeforeAgeDist(DistData), 
-              plot_Model(Result), plot_Model_Zoom(Result), 
-              plot_AfterAgeDist(Result))
-  })
+  output$Plot_Legend <- renderPlot({
+    (
+      ggdraw(get_legend(
+        plot_BeforeAgeDist(getDistData()) + 
+          theme(legend.position='top', 
+                legend.title=element_text(size=16, face='bold'),
+                legend.text = element_text(
+                  size=14, margin=margin(r=10, unit="pt"))) +
+          guides(color=guide_legend(nrow=2, 
+                                  title.position = "top", title.hjust = .5))
+        )) + 
+      theme(plot.margin=grid::unit(c(0,0,0,0), "mm"))
+      )
+    })
+  
+  output$Plot_AgeDist <- renderPlot({
+    plot_grid(
+      align='h', ncol=2, nrow=1, rel_widths=c(12,10),
+      plot_BeforeAgeDist(getDistData()), 
+      plot_AfterAgeDist(getResult()) + onlyx_theme
+      )
+    })
+  
+  output$Plot_Model <- renderPlot({
+    plot_grid(
+      align='v', ncol=1, nrow=2, rel_heights=c(12,10),
+      plot_Model(getResult()) + onlyy_theme,
+      plot_Model_Zoom(getResult()) + theme(plot.title=element_blank())
+      )
+    })
   
   output$Infections <- renderText({ 
     Beg <- getResult()[1,]

@@ -17,7 +17,7 @@ fluidPage(align='center',
   
   sidebarLayout(
     sidebarPanel(align='center',
-      width=7,
+      width=6,
       
       h3("Ao Longo da Simulação"),
       textOutput("Infections"),
@@ -196,9 +196,10 @@ fluidPage(align='center',
                                min=0, value=Def_LifeExp[9], max=100))
       )),
     
-  mainPanel(
-    width = 5,
-    plotOutput(outputId = "Plots", height='1600px')
+  mainPanel(width = 6,
+            plotOutput(outputId = "Plot_Legend", height='70px'),
+            plotOutput(outputId = "Plot_AgeDist", heigh='400px'),
+            plotOutput(outputId = "Plot_Model", height='800px'),
     )
   )
 )
