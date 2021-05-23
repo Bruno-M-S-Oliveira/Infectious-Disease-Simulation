@@ -2,7 +2,7 @@
 # |  ___|   _ _ __   ___| |_(_) ___  _ __  ___
 # | |_ | | | | '_ \ / __| __| |/ _ \| '_ \/ __|
 # |  _|| |_| | | | | (__| |_| | (_) | | | \__ \
-# |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ 
+# |_|   \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
 # Extra functions to avoid cluttering up the code
 source('Fun_GetCM.R')
 
@@ -56,7 +56,7 @@ get_InitialState<- function(input) {
   Rv0 <- get_Rv0(input)
   D0  <- get_D0(input)
   S0  <- get_T0(input) - Sv0 - E0 - Ev0 - I0 - Iv0 - R0 - Rv0 - D0
-  
+
   c(S=S0, Sv=Sv0, E=E0, Ev=Ev0, I=I0, Iv=Iv0, R=R0, Rv=Rv0, D=D0)
 }
 
@@ -134,9 +134,9 @@ get_Parameters<- function(input) {
   vs       <- get_VaxStart(input)
   vi       <- get_VaxIncrease(input)
   Priority <- get_Priority(input)
-  
+
   uScaling <- get_u_scaling(u, CM, IPeriod, get_BRN(input))
-  
+
   list(u=u/uScaling, CM=CM, EPeriod=EPeriod, IPeriod=IPeriod, RPeriod=RPeriod,
        IFR=IFR, vg=vg, ve=ve, vs=vs, vi=vi, Priority=Priority)
 }

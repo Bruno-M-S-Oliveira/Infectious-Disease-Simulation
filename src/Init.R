@@ -4,7 +4,7 @@
 #  | || | | | | |_
 # |___|_| |_|_|\__|
 # Things that are useful to do in the beginning
-if(rstudioapi::isAvailable()) 
+if(rstudioapi::isAvailable())
   setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Clear All Variables
@@ -31,11 +31,11 @@ theme_update(
 SEIRDS_theme <- scale_color_manual(
   name = "Grupo",
   aesthetics = c("colour", "fill"),
-  values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62", 
+  values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62",
              "I"="#695DFF", "Iv"="#9890FF", "R"="#3BC455", "Rv"="#62D077",
              "D"="#FC717F"),
   labels = c("Suscetíveis", "Susptíveis e Vacinados",
-             "Expostos", "Expostos e Vacinados", 
+             "Expostos", "Expostos e Vacinados",
              "Infetados", "Infetados e Vacinados",
              "Recuperados", "Recuperados e Vacinados",
              "Mortos"),
