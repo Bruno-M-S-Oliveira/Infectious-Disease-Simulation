@@ -33,7 +33,7 @@ Def_Priority <- Def_Priority1
 # Population distribution
 # Thanks to https://github.com/dssg-pt/covid19pt-data
 # Note: Cases from unknown people are ignored
-Data <- import('../covid19pt-data/data.csv') %>% 
+Data <- read.csv('../covid19pt-data/data.csv') %>% 
   filter(data=='26-12-2020') %>% 
   mutate(CumI_0  = confirmados_0_9_m   + confirmados_0_9_f)   %>% 
   mutate(CumI_10 = confirmados_10_19_m + confirmados_10_19_f) %>% 

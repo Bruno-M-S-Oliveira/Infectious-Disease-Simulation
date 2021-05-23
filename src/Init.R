@@ -4,7 +4,8 @@
 #  | || | | | | |_
 # |___|_| |_|_|\__|
 # Things that are useful to do in the beginning
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+if(rstudioapi::isAvailable()) 
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Clear All Variables
 rm(list = ls())
@@ -14,7 +15,6 @@ library(shiny)
 library(tidyverse)
 library(magrittr)
 library(cowplot)
-library(rio)
 library(deSolve)
 
 # Source parameters
@@ -29,7 +29,7 @@ theme_update(
   )
 
 SEIRDS_theme <- scale_color_manual(
-  name = "Estado",
+  name = "Grupo",
   aesthetics = c("colour", "fill"),
   values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62", 
              "I"="#695DFF", "Iv"="#9890FF", "R"="#3BC455", "Rv"="#62D077",

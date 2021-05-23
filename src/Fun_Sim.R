@@ -90,9 +90,9 @@ vax_Event <- function(t, y, parms) {
   c(S, Sv, E, Ev, I, Iv, R, Rv, D)
 }
 
-run_Sim <- function(State, Parameters, Times, VaxTimes) {
+run_Sim <- function(Group, Parameters, Times, VaxTimes) {
   as.data.frame(lsoda(
-    y=State, times=Def_Times, parms=Parameters,
+    y=Group, times=Def_Times, parms=Parameters,
     func=SEIRDS_Model, events=list(func=vax_Event, time=VaxTimes))) %>%
     mutate(S=S1+S2+S3+S4+S5+S6+S7+S8+S9) %>%
     mutate(Sv=Sv1+Sv2+Sv3+Sv4+Sv5+Sv6+Sv7+Sv8+Sv9) %>%

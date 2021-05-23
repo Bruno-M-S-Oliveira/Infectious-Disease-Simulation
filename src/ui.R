@@ -4,7 +4,8 @@
 # | |_| || |
 #  \___/|___|
 # UI for the Shiny App
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+if(rstudioapi::isAvailable()) 
+  setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source('Init.R')
 source('Fun_GetUI.R')

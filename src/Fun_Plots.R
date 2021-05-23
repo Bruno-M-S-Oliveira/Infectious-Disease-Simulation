@@ -6,7 +6,7 @@
 # Extra functions to avoid cluttering up the code
 
 plot_BeforeAgeDist <- function(DistData) {
-  ggplot(data=DistData, aes(x=Age, fill=State)) + SEIRDS_theme +
+  ggplot(data=DistData, aes(x=Age, fill=Group)) + SEIRDS_theme +
     ggtitle("Distribuição Populacional Antes da Simulação") +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
@@ -15,11 +15,19 @@ plot_BeforeAgeDist <- function(DistData) {
     guides(color=guide_legend(nrow=1))
 }
 
+plot_BeforeAgeDist2 <- function(DistData) {
+  ggplot(data=DistData, aes(x=Age, fill=Group)) + SEIRDS_theme +
+    ggtitle("Distribuição Populacional Antes da Simulação") +
+    scale_x_discrete('Idade (Anos)') +
+    scale_y_continuous('Número de Pessoas') +
+    geom_bar(aes(weight=N))
+}
+
 plot_Model <- function(Result) {
   Result %>% 
     select(time, S, Sv, E, Ev, I, Iv, R, Rv, D) %>% 
-    pivot_longer(!time, names_to='State', values_to='N') %>% 
-    ggplot(aes(x=time, y=N, color=State)) + SEIRDS_theme +
+    pivot_longer(!time, names_to='Group', values_to='N') %>% 
+    ggplot(aes(x=time, y=N, color=Group)) + SEIRDS_theme +
     ggtitle("Simulação") +
     scale_x_continuous('Dia') +
     scale_y_continuous('Número de Pessoas') +
@@ -29,8 +37,8 @@ plot_Model <- function(Result) {
 plot_Model_Zoom <- function(Result) {
   Result %>%
     select(time, E, Ev, I, Iv, Rv, D) %>% 
-    pivot_longer(!time, names_to='State', values_to='N') %>% 
-    ggplot(aes(x=time, y=N, color=State)) + SEIRDS_theme +
+    pivot_longer(!time, names_to='Group', values_to='N') %>% 
+    ggplot(aes(x=time, y=N, color=Group)) + SEIRDS_theme +
     ggtitle("Simulação") +
     scale_x_continuous('Dia') +
     scale_y_continuous('Número de Pessoas') +
@@ -52,8 +60,8 @@ plot_AfterAgeDist <- function(Result) {
     c(Data$Rv1, Data$Rv2, Data$Rv3, Data$Rv4, Data$Rv5, Data$Rv6, Data$Rv7, Data$Rv8, Data$Rv9),
     c(Data$D1, Data$D2, Data$D3, Data$D4, Data$D5, Data$D6, Data$D7, Data$D8, Data$D9)) %>%
     set_colnames(c('Age', 'S', 'Sv', 'E', 'Ev', 'I', 'Iv', 'R', 'Rv', 'D')) %>% 
-    pivot_longer(!Age, names_to='State', values_to='N') %>% 
-    ggplot(aes(x=Age, fill=State)) + SEIRDS_theme +
+    pivot_longer(!Age, names_to='Group', values_to='N') %>% 
+    ggplot(aes(x=Age, fill=Group)) + SEIRDS_theme +
     ggtitle("Distribuição Populacional Após a Simulação") +
     scale_x_discrete('Idade (Anos)') +
     scale_y_continuous('Número de Pessoas') +
