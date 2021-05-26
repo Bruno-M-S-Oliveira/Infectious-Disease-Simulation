@@ -31,15 +31,17 @@ theme_update(
 SEIRDS_theme <- scale_color_manual(
   name = "Grupo",
   aesthetics = c("colour", "fill"),
-  values = c("S"="#00BBD8", "Sv"="#0CDEFF", "E"="#C4983B", "Ev"="#D0AD62",
-             "I"="#695DFF", "Iv"="#9890FF", "R"="#3BC455", "Rv"="#62D077",
-             "D"="#FC717F"),
-  labels = c("Suscetíveis", "Susptíveis e Vacinados",
-             "Expostos", "Expostos e Vacinados",
-             "Infetados", "Infetados e Vacinados",
-             "Recuperados", "Recuperados e Vacinados",
-             "Mortos"),
-  limits=c("S", "Sv", "E", "Ev", "I", "Iv", "R", "Rv", "D")
+  values = c("Sv"="#80EAFF", "S"="#00D5FF", "Sx"="#0095B3", 
+             "Ev"="#FFEE99", "E"="#FFD500", "Ex"="#B39500", 
+             "Iv"="#DD99FF", "I"="#AA00FF", "Ix"="#7700B3", 
+             "Rv"="#D9FFB3", "R"="#99FF33", "Rx"="#73E600", 
+             "D"="#FF4D4D"),
+  labels = c("Sv"="Susptíveis e Vacinados" , "S"="Suscetíveis", "Sx"="Susptíveis e Antivax" , 
+             "Ev"="Expostos e Vacinados"   , "E"="Expostos"   , "Ex"="Expostos e Antivax"   , 
+             "Iv"="Infetados e Vacinados"  , "I"="Infetados"  , "Ix"="Infetados e Antivax"  , 
+             "Rv"="Recuperados e Vacinados", "R"="Recuperados", "Rx"="Recuperados e Antivax", 
+             "D"="Mortos"),
+  limits=c("Sv", "S", "Sx", "Ev", "E", "Ex", "Iv", "I", "Ix", "Rv", "R", "Rx", "D")
   )
 
 onlyx_theme <- theme(

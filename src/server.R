@@ -14,10 +14,25 @@ source('Fun_Plots.R')
 
 function(input, output) {
   getDistData <- reactive({
-    data.frame(Age, get_I0(input),get_R0(input),get_D0(input)) %>%
-      set_colnames(c('Age','I','R','D')) %>%
-      mutate(S = get_T0(input) - I - R - D, .before=I) %>%
-      pivot_longer(!Age, names_to='Group', values_to='N')
+    DistVec <- get_InitialState(input)
+    Sv <- DistVec[1:9]
+    S  <- DistVec[10:18]
+    Sx <- DistVec[19:27]
+    Ev <- DistVec[28:36]
+    E  <- DistVec[37:45]
+    Ex <- DistVec[46:54]
+    Iv <- DistVec[55:63]
+    I  <- DistVec[64:72]
+    Ix <- DistVec[73:81]
+    Rv <- DistVec[82:90]
+    R  <- DistVec[91:99]
+    Rx <- DistVec[100:108]
+    D  <- DistVec[109:117]
+    
+    data.frame(Age, Sv, S, Sx, Ev, E, Ex, Iv, I, Ix, Rv, R, Rx, D) %>% 
+      set_colnames(c('Age','Sv','S','Sx','Ev','E','Ex','Iv','I','Ix','Rv','R','Rx','D')) %>%
+      pivot_longer(!Age, names_to='Group', values_to='N') %>%
+      mutate(Group = factor(Group, levels=c('D','Rv','R','Rx','Iv','I','Ix','Ev','E','Ex','Sv','S','Sx')))
   })
 
   getResult <- reactive({
@@ -34,7 +49,7 @@ function(input, output) {
                 legend.title=element_text(size=16, face='bold'),
                 legend.text = element_text(
                   size=14, margin=margin(r=10, unit="pt"))) +
-          guides(color=guide_legend(nrow=2,
+          guides(color=guide_legend(nrow=3,
                                   title.position = "top", title.hjust = .5))
         )) +
       theme(plot.margin=grid::unit(c(0,0,0,0), "mm"))

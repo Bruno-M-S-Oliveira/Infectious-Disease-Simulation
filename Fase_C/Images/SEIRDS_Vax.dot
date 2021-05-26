@@ -1,0 +1,48 @@
+digraph "Modelo SIRD com Vacinação" {
+        graph[rankdir=LR]
+        //graph[label="Modelo SIRD com Vacina\c{c}\~ao", labelloc=top, labeljust=left]
+
+        node[style="rounded, filled", shape = oval]
+
+        Sv[label="Susce\'iveis e Vacinados", color="#80EAFF"]
+        S [label="Suscet\'iveis"           , color="#00D5FF"]
+        Sx[label="Susce\'iveis e Antivax"  , color="#0095B3"]
+        Ev[label="Expostos e Vacinados"    , color="#FFEE99"]
+        E [label="Expostos"                , color="#FFD500"]
+        Ex[label="Expostos e Antivax"      , color="#B39500"]
+        Iv[label="Infetados e Vacinados"   , color="#DD99FF"]
+        I [label="Infetados"               , color="#AA00FF"]
+        Ix[label="Infetados e Antivax"     , color="#7700B3"]
+        Rv[label="Recuperados e Vacinados" , color="#D9FFB3"]
+        R [label="Recuperados"             , color="#99FF33"]
+        Rx[label="Recuperados e Antivax"   , color="#73E600"]
+        D [label="Mortos"                  , color="#FF4D4D"]
+
+        subgraph { Sv S Sx   rank  = same }
+        subgraph { Ev E Ex   rank  = same }
+        subgraph { Iv I Ix   rank  = same }
+        subgraph { Rv R Rx D rank  = same }
+
+        S  -> Sv [label="$\frac{V_D}{S+E}$"]
+        E  -> Ev [label="$\frac{V_D}{S+E}$"]
+
+        Sv -> Ev [label="$\Lambda$"]
+        S  -> E  [label="$\Lambda$"]
+        Sx -> Ex [label="$\Lambda$"]
+
+        Ev -> Iv [label="$\alpha$"]
+        E  -> I  [label="$\alpha$"]
+        Ex -> Ix [label="$\alpha$"]
+
+        Iv -> Rv [label="$\gamma_v$"]
+        I  -> R  [label="$\gamma$"]
+        Ix -> Rx [label="$\gamma$"]
+
+        Iv -> D  [label="$\mu_v$"]
+        I  -> D  [label="$\mu$"]
+        Ix -> D  [label="$\mu$"]
+
+        Rv -> Sv [label="$\omega$"]
+        R  -> S  [label="$\omega$"]
+        Rx -> Sx [label="$\omega$"]
+}

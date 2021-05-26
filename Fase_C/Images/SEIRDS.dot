@@ -1,0 +1,18 @@
+digraph "Modelo SIRD sem Vacinação" {
+        graph[rankdir=LR]
+        //graph[label="Modelo SIRD com Vacina\c{c}\~ao", labelloc=top, labeljust=left]
+
+        node[style="rounded, filled", shape = oval]
+
+        S [label="Suscet\'iveis"           , color="#00D5FF"]
+        E [label="Expostos"                , color="#FFD500"]
+        I [label="Infetados"               , color="#AA00FF"]
+        R [label="Recuperados"             , color="#99FF33"]
+        D [label="Mortos"                  , color="#FF4D4D"]
+
+        S  -> E  [label="$\Lambda$"]
+        E  -> I  [label="$\alpha$"]
+        I  -> R  [label="$\gamma$"]
+        I  -> D  [label="$\mu$"]
+        R  -> S  [label="$\omega$"]
+}
