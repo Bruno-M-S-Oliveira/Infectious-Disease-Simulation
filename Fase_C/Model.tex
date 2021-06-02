@@ -15,15 +15,13 @@ Na \ref{fig:Model}, encontra-se esquematizada a progressão que pode ocorrer ent
 \label{fig:Model}\end{figure}
 
 \subsection{Descrição Matemática}
-Para descrever matematicamente o modelo proposto, ir-se-á considerar a progressão de um indivíduo inicialmente susceptível ao longo do tempo.
+Para descrever matematicamente o modelo proposto, irá considerar-se a progressão de um indivíduo inicialmente susceptível ao longo do tempo.
 Em média, este irá contactar diariamente com $C$ pessoas, sendo que uma fração $\frac{I}{N}$ estará infetada com $N\equiv S+E+I+R$ a população total.
-Definindo-se susceptibilidade $u\in[0,1]$ como a probabilidade do contacto com uma pessoa seropositiva levar ao desenvolvimento da doença, a probabilidade do indivíduo que se está a seguir passar de susceptível a exposto num determinado dia é:
-\begin{equation*}
-        \Lambda \equiv u\vdot C \vdot \frac{I}{N}
-\end{equation*}
-e o número de pessoas a passar de um grupo para o outro vai ser:
+Definindo-se susceptibilidade $u\in[0,1]$ como a probabilidade do contacto com uma pessoa seropositiva levar ao desenvolvimento da doença, a probabilidade do indivíduo que se está a seguir passar de susceptível a exposto num determinado dia é $\Lambda$:
 \begin{equation*}
         S \xrightarrow{\Lambda\vdot S} E
+        \qquad\qquad
+        \Lambda \equiv u\vdot C \vdot \frac{I}{N}
 \end{equation*}
 
 Durante o período de incubação do vírus, um indivíduo exposto não irá apresentar sintomas ou infetar terceiros.
@@ -64,15 +62,18 @@ Com esta alteração, as variáveis $S$, $E$, $I$, $R$ e $D$ tornam-se vetores a
 Também a susceptibilidade, $u$, e a taxa de mortalidade, $IFR$, passam a ser especificadas para cada faixa etária e o número de contactos diários, $C$, uma matriz $9\cp9$.
 
 \subsection{Vacinação}
-Para implementar a vacinação, criam-se quatro novos grupos:
+Para implementar a vacinação, criam-se oito novos grupos:
 \begin{itemize}\begin{multicols}{2}
         \item Susceptível e vacinado ($S_v$)
         \item Exposto e vacinado ($E_v$)
         \item Infetado e vacinado ($I_v$)
         \item Recuperado e vacinado ($R_v$)
+        \item Susceptível e não vacinável ($S_x$)
+        \item Exposto e não vacinável ($E_x$)
+        \item Infetado e não vacinável ($I_x$)
+        \item Recuperado e não vacinável ($R_x$)
 \end{multicols}\end{itemize}
-
-Definem-se ainda os seguintes parâmetros:
+e definem-se os seguintes parâmetros:
 \begin{itemize}\begin{multicols}{2}\raggedcolumns
         \item Total de vacinas a administrar ($V_G$)
         \item Número de doses no primeiro dia ($V_0$)
@@ -81,9 +82,9 @@ Definem-se ainda os seguintes parâmetros:
         \item Faixas etárias prioritárias
 \end{multicols}\end{itemize}
 
-Para propósitos de simulação, as vacinas são administradas no início de cada dia antes da dinâmica de grupos segundo as regras:
+As vacinas são administradas no início de cada dia antes da dinâmica de grupos com as seguintes regras:
 \begin{enumerate}
-        \item As vacinas apenas são administradas a pessoas susceptíveis e expostas
+        \item As vacinas apenas são administradas a pessoas susceptíveis ($S$) e expostas ($E$)
         \item Em cada dia $i$ disponibilizam-se $(V_0+V_d\vdot i)$ doses até que se tenham adminstrado no total $V_G$ doses
         \item Se as faixas etárias prioritárias tiverem membros por vacinar, estas serão vacinadas equitativamente
         \item Se sobrarem doses, as faixas etárias não prioritárias serão vacinadas equitativamente
@@ -91,15 +92,15 @@ Para propósitos de simulação, as vacinas são administradas no início de cad
 
 As pessoas vacinadas irão então seguir uma dinâmica de grupos em tudo análoga à já descrita sendo que, naquelas em que a vacina for eficaz, quando infetadas não irão apresentar sintomas ou transmitir a doença.
 São então necessárias as seguintes (re)definições:
-\begin{align*}
-        \Lambda \equiv u\vdot C\vdot \frac{I + (1-V_e)\vdot I_v}{N}
-        \qquad&\qquad
-        N \equiv S + S_v + E + E_v + I + I_v + R + R_v
-        \\
+\begin{gather*}
+        \Lambda \equiv u\vdot C\vdot \frac{I + (1-V_e)\vdot I_v + I_x}{N}
+        \qquad
         \gamma_v \equiv \frac{1-(1-V_e)\vdot IFR}{\tau_I}
-        \qquad&\qquad
+        \qquad
         \mu_v \equiv \frac{(1-V_e)\vdot IFR}{\tau_I}
-\end{align*}
+        \\
+        N \equiv S + S_v + S_x + E + E_v + E_x + I + I_v + I_x + R + R_v + R_x
+\end{gather*}
 
 \subsection{Equações Diferenciais}
 O modelo descrito encontra-se esquematizado na \ref{fig:ModelVax} e pode ser descrito pelo seguinte sistema de equações diferenciais.
@@ -108,26 +109,40 @@ O modelo descrito encontra-se esquematizado na \ref{fig:ModelVax} e pode ser des
                 \Dot{S}   &= - \Lambda S + \omega R
                 \\
                 \Dot{S_v} &= - \Lambda S_v + \omega R_v
-        \end{aligned}\qquad
+                \\
+                \Dot{S_x} &= - \Lambda S_x + \omega R_x
+        \end{aligned}\quad
         \begin{aligned}
                 \Dot{E}   &= \Lambda S - \alpha E
                 \\
                 \Dot{E_v} &= \Lambda S_v - \alpha E_v
-        \end{aligned}\qquad
+                \\
+                \Dot{E_x} &= \Lambda S_x - \alpha E_x
+        \end{aligned}\quad
         \begin{aligned}
                 \Dot{I}   &= \alpha E   - (\gamma   + \mu)   I
                 \\
                 \Dot{I_v} &= \alpha E_v - (\gamma_v + \mu_v) I_v
-        \end{aligned}\qquad
+                \\
+                \Dot{I_x} &= \alpha E_x - (\gamma   + \mu) I_x
+        \end{aligned}\quad
         \begin{aligned}
                 \Dot{R}   &= \gamma I     - \omega R
                 \\
                 \Dot{R_v} &= \gamma_v I_v - \omega R_v
+                \\
+                \Dot{R_x} &= \gamma I_x   - \omega R_x
         \end{aligned}\qquad
-        \Dot{D} = \mu I + \mu_v I_v
+        \Dot{D} = \mu I + \mu_v I_v + \mu I_x
 \end{equation*}
 
 \begin{figure}[H]\centering
         \includegraphics[width=.7\linewidth]{Images/SEIRDS_Vax.pdf}
         \caption{Esquema do modelo SEIRDS com vacinação.}
 \label{fig:ModelVax}\end{figure}
+
+\subsection{Limitações}
+O modelo descrito apresenta algumas limitações.
+O requisito de que população em estudo seja muito grande é inerente ao próprio modelo.
+A utilização de vacinas com mais do que uma dose poderia ser resolvida com a implementação de mais grupos.
+Os efeitos da sobrelotação dos hospitais e das mitigação da pandemia poderiam ser estimados a partir de situações prévias e incorporadas na simulação.
