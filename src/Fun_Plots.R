@@ -37,8 +37,6 @@ plot_AfterAgeDist <- function(Result) {
     pivot_longer(!Age, names_to='Group', values_to='N') %>%
     mutate(Group = factor(Group, levels=c('D','Rv','R','Rx','Iv','I','Ix','Ev','E','Ex','Sv','S','Sx')))
   
-  print(Teste)
-  
   Teste %>% 
     ggplot(aes(x=Age, fill=Group)) + SEIRDS_theme +
     ggtitle("Distribuição Populacional Após a Simulação") +

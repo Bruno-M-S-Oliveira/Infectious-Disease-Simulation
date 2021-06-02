@@ -19,6 +19,7 @@ SEIRDS_Model <- function(t, y, parms) {
   R  <- y[91:99]
   Rx <- y[100:108]
   D  <- y[109:117]
+  TI <- y[118:126]
 
   Total <- S+Sx+Sv + E+Ex+Ev + I+Ix+Iv + R+Rx+Rv
 
@@ -47,8 +48,10 @@ SEIRDS_Model <- function(t, y, parms) {
   dRx <- gamma*Ix            - omega*Rx
 
   dD  <- mu*(I+Ix+(1-ve)*Iv)
-
-  list(c(dSv, dS, dSx, dEv, dE, dEx, dIv, dI, dIx, dRv, dR, dRx, dD))
+  
+  dTI <- (CM%*%(((I+Ix+(1-ve)*Iv)/Total))*u)*(S + Sv + Sx)
+ 
+  list(c(dSv, dS, dSx, dEv, dE, dEx, dIv, dI, dIx, dRv, dR, dRx, dD, dTI))
 }
 
 vax_Event <- function(t, y, parms) {
@@ -65,6 +68,7 @@ vax_Event <- function(t, y, parms) {
   R  <- y[91:99]
   Rx <- y[100:108]
   D  <- y[109:117]
+  TI <- y[118:126]
 
   vg <- parms$vg
   vs <- parms$vs
@@ -99,7 +103,7 @@ vax_Event <- function(t, y, parms) {
   Ev <- Ev + dEv
   E  <- E  - dEv
 
-  c(Sv, S, Sx, Ev, E, Ex, Iv, I, Ix, Rv, R, Rx, D)
+  c(Sv, S, Sx, Ev, E, Ex, Iv, I, Ix, Rv, R, Rx, D, TI)
 }
 
 run_Sim <- function(Group, Parameters, Times, VaxTimes) {
@@ -119,6 +123,7 @@ run_Sim <- function(Group, Parameters, Times, VaxTimes) {
     mutate(R =R1 +R2 +R3 +R4 +R5 +R6 +R7 +R8 +R9 ) %>%
     mutate(Rx=Rx1+Rx2+Rx3+Rx4+Rx5+Rx6+Rx7+Rx8+Rx9) %>%
     mutate(D =D1 +D2 +D3 +D4 +D5 +D6 +D7 +D8 +D9 ) %>%
+    mutate(TI=TI1+TI2+TI3+TI4+TI5+TI6+TI7+TI8+TI9) %>%
     mutate(Total     =S      +E      +I      +R        ) %>%
     mutate(Totalx    =  Sx      +Ex    +Ix     +Rx     ) %>% 
     mutate(Totalv    =     Sv     +Ev     +Iv     +Rv  ) %>% 

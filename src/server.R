@@ -73,29 +73,25 @@ function(input, output) {
     })
 
   output$Infections <- renderText({
-    Beg <- getResult()[1,]
     End <- getResult()[nrow(getResult()),]
 
-    paste("Ocorreram ", floor(
-      (End$Rv + End$R + End$Rv + End$I + End$Iv + End$D)
-      - (Beg$Rv + Beg$R + Beg$Rv + Beg$I + Beg$Iv + Beg$D)),
-      " novas infeções.")
+    paste("There were ", floor(End$TI),
+      " new infections.")
   })
 
   output$Deaths <- renderText({
     End <- getResult()[nrow(getResult()),]
-    paste("Morreram ", floor(End$D),
-          " pessoas.")
+    paste(floor(End$D), " people died.")
   })
 
   output$YLL <- renderText({
     End <- getResult()[nrow(getResult()),]
     LifeExp <- get_LifeExp(input)
 
-    paste("Perderam-se ", floor(
+    paste(floor(
       sum(LifeExp*c(End$D1, End$D2, End$D3, End$D4, End$D5,
                     End$D6, End$D7, End$D8, End$D9))),
-      " anos de vida.")
+      " years of life were lost.")
   })
 }
 

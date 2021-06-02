@@ -134,9 +134,10 @@ get_InitialState<- function(input) {
   D0  <- get_D0(input)
   S0  <- (get_T0(input) -Sv0 -E0-Ex0-Ev0 -I0-Ix0-Iv0 -R0-Rx0-Rv0 -D0) * (1-NVax)
   Sx0 <- (get_T0(input) -Sv0 -E0-Ex0-Ev0 -I0-Ix0-Iv0 -R0-Rx0-Rv0 -D0) * NVax
+  TI0 <- rep(0,9)
 
   c(Sv=Sv0, S=S0, Sx=Sx0, Ev=Ev0, E=E0, Ex=Ex0, 
-    Iv=Iv0, I=I0, Ix=Ix0, Rv=Rv0, R=R0, Rx=Rx0, D=D0)
+    Iv=Iv0, I=I0, Ix=Ix0, Rv=Rv0, R=R0, Rx=Rx0, D=D0, TI=TI0)
 }
 
 get_Parameters<- function(input) {
